@@ -1,16 +1,13 @@
 package com.xxl.job.admin.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.xxl.job.admin.model.XxlJobUser;
-import com.xxl.tool.response.Response;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
-/**
- * @author xuxueli 2019-05-04 16:44:59
- */
 @Mapper
-public interface XxlJobUserMapper {
+public interface XxlJobUserMapper extends BaseMapper<XxlJobUser> {
 
 	public List<XxlJobUser> pageList(@Param("offset") int offset,
                                      @Param("pagesize") int pagesize,

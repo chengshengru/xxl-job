@@ -1,18 +1,14 @@
 package com.xxl.job.admin.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.xxl.job.admin.model.XxlJobInfo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
-
-/**
- * job info
- * @author xuxueli 2016-1-12 18:03:45
- */
 @Mapper
-public interface XxlJobInfoMapper {
+public interface XxlJobInfoMapper extends BaseMapper<XxlJobInfo> {
 
 	public List<XxlJobInfo> pageList(@Param("offset") int offset,
 									 @Param("pagesize") int pagesize,
@@ -41,32 +37,10 @@ public interface XxlJobInfoMapper {
 
 	public int findAllCount();
 
-	/**
-	 * find schedule job, limit "trigger_status = 1"
-	 *
-	 * @param maxNextTime
-	 * @param pagesize
-	 * @return
-	 */
 	public List<XxlJobInfo> scheduleJobQuery(@Param("maxNextTime") long maxNextTime, @Param("pagesize") int pagesize );
 
-	/**
-	 * update schedule job
-	 *
-	 * 	1、can only update "trigger_status = 1", Avoid stopping tasks from being opened
-	 * 	2、valid "triggerStatus gte 0", filter illegal state
-	 *
-	 * @param xxlJobInfo
-	 * @return
-	 */
 	public int scheduleUpdate(XxlJobInfo xxlJobInfo);
 
-	/**
-	 * batch update job info
-	 *
-	 * @param jobInfoList
-	 * @return
-	 */
 	public int scheduleBatchUpdate(@Param("list") List<XxlJobInfo> jobInfoList);
 
 }

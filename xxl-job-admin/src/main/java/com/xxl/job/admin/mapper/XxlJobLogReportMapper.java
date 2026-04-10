@@ -1,5 +1,6 @@
 package com.xxl.job.admin.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.xxl.job.admin.model.XxlJobLogReport;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -7,16 +8,8 @@ import org.apache.ibatis.annotations.Param;
 import java.util.Date;
 import java.util.List;
 
-/**
- * job log
- * @author xuxueli 2019-11-22
- */
 @Mapper
-public interface XxlJobLogReportMapper {
-
-	/*public int save(XxlJobLogReport xxlJobLogReport);
-
-	public int update(XxlJobLogReport xxlJobLogReport);*/
+public interface XxlJobLogReportMapper extends BaseMapper<XxlJobLogReport> {
 
 	public int saveOrUpdate(XxlJobLogReport xxlJobLogReport);
 

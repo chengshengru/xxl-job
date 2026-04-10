@@ -1,16 +1,31 @@
 package com.xxl.job.admin.model;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+
 import java.util.Date;
 
+@TableName("xxl_job_log_report")
 public class XxlJobLogReport {
 
+    @TableId(type = IdType.AUTO)
     private int id;
+    
+    @TableField("trigger_day")
     private Date triggerDay;
 
+    @TableField("running_count")
     private int runningCount;
+    
+    @TableField("suc_count")
     private int sucCount;
+    
+    @TableField("fail_count")
     private int failCount;
 
+    @TableField("update_time")
     private Date updateTime;
 
     public int getId() {

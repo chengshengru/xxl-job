@@ -1,16 +1,14 @@
 package com.xxl.job.admin.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.xxl.job.admin.model.XxlJobGroup;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
-/**
- * Created by xuxueli on 16/9/30.
- */
 @Mapper
-public interface XxlJobGroupMapper {
+public interface XxlJobGroupMapper extends BaseMapper<XxlJobGroup> {
 
     public List<XxlJobGroup> findAll();
 

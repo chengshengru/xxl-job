@@ -55,6 +55,8 @@
 		<xxl-tool.version>2.5.0</xxl-tool.version>
 		<!-- gson -->
 		<gson.version>2.13.2</gson.version>
+		<!-- mybatis-plus -->
+		<mybatis-plus.version>3.5.9</mybatis-plus.version>
 
 		<!-- spring-ai -->
 		<spring-ai.version>2.0.0-M4</spring-ai.version>
@@ -139,6 +141,12 @@
 				<groupId>org.mybatis.spring.boot</groupId>
 				<artifactId>mybatis-spring-boot-starter</artifactId>
 				<version>${mybatis-spring-boot-starter.version}</version>
+			</dependency>
+			<!-- mybatis-plus-starter -->
+			<dependency>
+				<groupId>com.baomidou</groupId>
+				<artifactId>mybatis-plus-spring-boot3-starter</artifactId>
+				<version>${mybatis-plus.version}</version>
 			</dependency>
 			<!-- mysql -->
 			<dependency>

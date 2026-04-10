@@ -1,19 +1,34 @@
 package com.xxl.job.admin.model;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+
 import java.util.Date;
 
-/**
- * xxl-job log for glue, used to track job code process
- * @author xuxueli 2016-5-19 17:57:46
- */
+@TableName("xxl_job_log_glue")
 public class XxlJobLogGlue {
 	
+	@TableId(type = IdType.AUTO)
 	private int id;
-	private int jobId;				// 任务主键ID
-	private String glueType;		// GLUE类型	#com.xxl.job.core.glue.GlueTypeEnum
+	
+	@TableField("job_id")
+	private int jobId;
+	
+	@TableField("glue_type")
+	private String glueType;
+	
+	@TableField("glue_source")
 	private String glueSource;
+	
+	@TableField("glue_remark")
 	private String glueRemark;
+	
+	@TableField("add_time")
 	private Date addTime;
+	
+	@TableField("update_time")
 	private Date updateTime;
 
 	public int getId() {

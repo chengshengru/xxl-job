@@ -1,16 +1,28 @@
 package com.xxl.job.admin.model;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+
 import java.util.Date;
 
-/**
- * Created by xuxueli on 16/9/30.
- */
+@TableName("xxl_job_registry")
 public class XxlJobRegistry {
 
+    @TableId(type = IdType.AUTO)
     private long id;
+    
+    @TableField("registry_group")
     private String registryGroup;
+    
+    @TableField("registry_key")
     private String registryKey;
+    
+    @TableField("registry_value")
     private String registryValue;
+    
+    @TableField("update_time")
     private Date updateTime;
 
     public long getId() {

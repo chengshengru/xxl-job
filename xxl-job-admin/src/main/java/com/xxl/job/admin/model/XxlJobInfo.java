@@ -1,46 +1,86 @@
 package com.xxl.job.admin.model;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+
 import java.util.Date;
 
-/**
- * xxl-job info
- *
- * @author xuxueli  2016-1-12 18:25:49
- */
+@TableName("xxl_job_info")
 public class XxlJobInfo {
 	
-	private int id;				// 主键ID
+	@TableId(type = IdType.AUTO)
+	private int id;
 	
-	private int jobGroup;		// 执行器主键ID
+	@TableField("job_group")
+	private int jobGroup;
+	
+	@TableField("job_desc")
 	private String jobDesc;
 	
+	@TableField("add_time")
 	private Date addTime;
+	
+	@TableField("update_time")
 	private Date updateTime;
 	
-	private String author;		// 负责人
-	private String alarmEmail;	// 报警邮件
-
-	private String scheduleType;			// 调度类型：ScheduleTypeEnum
-	private String scheduleConf;			// 调度配置，值含义取决于调度类型
-	private String misfireStrategy;			// 调度过期策略：MisfireStrategyEnum
-
-	private String executorRouteStrategy;	// 执行器路由策略：ExecutorRouteStrategyEnum
-	private String executorHandler;		    // 执行器，任务Handler名称
-	private String executorParam;		    // 执行器，任务参数
-	private String executorBlockStrategy;	// 阻塞处理策略：ExecutorBlockStrategyEnum
-	private int executorTimeout;     		// 任务执行超时时间，单位秒
-	private int executorFailRetryCount;		// 失败重试次数
+	@TableField("author")
+	private String author;
 	
-	private String glueType;		// GLUE类型：GlueTypeEnum
-	private String glueSource;		// GLUE源代码
-	private String glueRemark;		// GLUE备注
-	private Date glueUpdatetime;	// GLUE更新时间
+	@TableField("alarm_email")
+	private String alarmEmail;
 
-	private String childJobId;		// 子任务ID，多个逗号分隔
+	@TableField("schedule_type")
+	private String scheduleType;
+	
+	@TableField("schedule_conf")
+	private String scheduleConf;
+	
+	@TableField("misfire_strategy")
+	private String misfireStrategy;
 
-	private int triggerStatus;		// 调度状态：TriggerStatus
-	private long triggerLastTime;	// 上次调度时间
-	private long triggerNextTime;	// 下次调度时间
+	@TableField("executor_route_strategy")
+	private String executorRouteStrategy;
+	
+	@TableField("executor_handler")
+	private String executorHandler;
+	
+	@TableField("executor_param")
+	private String executorParam;
+	
+	@TableField("executor_block_strategy")
+	private String executorBlockStrategy;
+	
+	@TableField("executor_timeout")
+	private int executorTimeout;
+	
+	@TableField("executor_fail_retry_count")
+	private int executorFailRetryCount;
+	
+	@TableField("glue_type")
+	private String glueType;
+	
+	@TableField("glue_source")
+	private String glueSource;
+	
+	@TableField("glue_remark")
+	private String glueRemark;
+	
+	@TableField("glue_updatetime")
+	private Date glueUpdatetime;
+
+	@TableField("child_jobid")
+	private String childJobId;
+
+	@TableField("trigger_status")
+	private int triggerStatus;
+	
+	@TableField("trigger_last_time")
+	private long triggerLastTime;
+	
+	@TableField("trigger_next_time")
+	private long triggerNextTime;
 
 
 	public int getId() {
