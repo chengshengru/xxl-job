@@ -1,6 +1,6 @@
 package com.zvosframework.schedule.executor.config;
 
-import com.zvosframework.schedule.core.executor.impl.XxlJobSpringExecutor;
+import com.zvosframework.schedule.core.handler.annotation.ScheduleSpringExecutor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;

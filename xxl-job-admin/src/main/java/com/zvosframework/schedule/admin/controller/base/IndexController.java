@@ -2,7 +2,7 @@ package com.zvosframework.schedule.admin.controller.base;
 
 import com.zvosframework.schedule.admin.constant.Consts;
 import com.zvosframework.schedule.admin.model.dto.XxlBootResourceDTO;
-import com.zvosframework.schedule.admin.service.XxlJobService;
+import com.zvosframework.schedule.core.handler.annotation.ScheduleService;
 import com.zvosframework.schedule.admin.util.I18nUtil;
 import com.xxl.sso.core.annotation.XxlSso;
 import com.xxl.sso.core.helper.XxlSsoHelper;

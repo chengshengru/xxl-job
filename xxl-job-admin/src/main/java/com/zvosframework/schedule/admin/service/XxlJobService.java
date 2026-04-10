@@ -1,6 +1,6 @@
 package com.zvosframework.schedule.admin.service;
 
-import com.zvosframework.schedule.admin.model.XxlJobInfo;
+import com.zvosframework.schedule.core.handler.annotation.ScheduleInfo;
 import com.xxl.sso.core.model.LoginInfo;
 import com.xxl.tool.response.PageModel;
 import com.xxl.tool.response.Response;

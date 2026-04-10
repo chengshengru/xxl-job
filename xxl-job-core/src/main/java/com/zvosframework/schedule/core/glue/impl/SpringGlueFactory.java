@@ -1,6 +1,6 @@
 package com.zvosframework.schedule.core.glue.impl;
 
-import com.zvosframework.schedule.core.executor.impl.XxlJobSpringExecutor;
+import com.zvosframework.schedule.core.handler.annotation.ScheduleSpringExecutor;
 import com.zvosframework.schedule.core.glue.GlueFactory;
 import jakarta.annotation.Resource;
 import org.slf4j.Logger;

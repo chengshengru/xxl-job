@@ -1,12 +1,12 @@
 package com.zvosframework.schedule.admin.scheduler.alarm.impl;
 
 import com.zvosframework.schedule.admin.scheduler.alarm.JobAlarm;
-import com.zvosframework.schedule.admin.scheduler.config.XxlJobAdminBootstrap;
-import com.zvosframework.schedule.admin.model.XxlJobGroup;
-import com.zvosframework.schedule.admin.model.XxlJobInfo;
-import com.zvosframework.schedule.admin.model.XxlJobLog;
+import com.zvosframework.schedule.core.handler.annotation.ScheduleAdminBootstrap;
+import com.zvosframework.schedule.core.handler.annotation.ScheduleGroup;
+import com.zvosframework.schedule.core.handler.annotation.ScheduleInfo;
+import com.zvosframework.schedule.core.handler.annotation.ScheduleLog;
 import com.zvosframework.schedule.admin.util.I18nUtil;
-import com.zvosframework.schedule.core.context.XxlJobContext;
+import com.zvosframework.schedule.core.handler.annotation.ScheduleContext;
 import jakarta.mail.internet.MimeMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

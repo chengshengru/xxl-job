@@ -1,6 +1,6 @@
 package com.zvosframework.schedule.executor.test.ollama;
 
-import com.zvosframework.schedule.core.executor.impl.XxlJobSpringExecutor;
+import com.zvosframework.schedule.core.handler.annotation.ScheduleSpringExecutor;
 import jakarta.annotation.Resource;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;

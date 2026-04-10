@@ -1,7 +1,7 @@
 package com.zvosframework.schedule.executor.jobhandler;
 
-import com.zvosframework.schedule.core.context.XxlJobHelper;
-import com.zvosframework.schedule.core.handler.annotation.XxlJob;
+import com.zvosframework.schedule.core.handler.annotation.ScheduleHelper;
+import com.zvosframework.schedule.core.handler.annotation.Schedule;
 import com.xxl.tool.json.GsonTool;
 import io.github.imfangs.dify.client.DifyClientFactory;
 import io.github.imfangs.dify.client.DifyWorkflowClient;
@@ -47,7 +47,7 @@ public class AIXxlJob {
      *      }
      *  </pre>
      */
-    @XxlJob("ollamaJobHandler")
+    @Schedule("ollamaJobHandler")
     public void ollamaJobHandler() {
 
         // param
@@ -148,7 +148,7 @@ public class AIXxlJob {
      *      }
      *  </pre>
      */
-    @XxlJob("difyWorkflowJobHandler")
+    @Schedule("difyWorkflowJobHandler")
     public void difyWorkflowJobHandler() throws Exception {
 
         // param
@@ -268,7 +268,7 @@ public class AIXxlJob {
      *      }
      *  </pre>
      */
-    @XxlJob("openClawJobHandler")
+    @Schedule("openClawJobHandler")
     public void openClawJobHandler() {
 
         // param

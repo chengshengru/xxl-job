@@ -1,6 +1,6 @@
 package com.zvosframework.schedule.admin.mapper;
 
-import com.zvosframework.schedule.admin.model.XxlJobGroup;
+import com.zvosframework.schedule.core.handler.annotation.ScheduleGroup;
 import jakarta.annotation.Resource;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

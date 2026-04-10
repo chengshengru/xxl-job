@@ -4,7 +4,7 @@ import com.zvosframework.schedule.core.constant.RegistType;
 import com.zvosframework.schedule.core.openapi.AdminBiz;
 import com.zvosframework.schedule.core.openapi.model.CallbackRequest;
 import com.zvosframework.schedule.core.openapi.model.RegistryRequest;
-import com.zvosframework.schedule.core.context.XxlJobContext;
+import com.zvosframework.schedule.core.handler.annotation.ScheduleContext;
 import com.zvosframework.schedule.core.constant.Const;
 import com.xxl.tool.http.HttpTool;
 import com.xxl.tool.response.Response;

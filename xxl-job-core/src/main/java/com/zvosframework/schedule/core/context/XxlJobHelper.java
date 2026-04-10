@@ -1,6 +1,6 @@
 package com.zvosframework.schedule.core.context;
 
-import com.zvosframework.schedule.core.log.XxlJobFileAppender;
+import com.zvosframework.schedule.core.handler.annotation.ScheduleFileAppender;
 import com.xxl.tool.core.DateTool;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

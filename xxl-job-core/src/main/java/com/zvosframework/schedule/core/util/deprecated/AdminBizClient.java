@@ -3,7 +3,7 @@
 //import com.zvosframework.schedule.core.openapi.AdminBiz;
 //import com.zvosframework.schedule.core.openapi.model.HandleCallbackRequest;
 //import com.zvosframework.schedule.core.openapi.model.RegistryRequest;
-//import com.zvosframework.schedule.core.util.XxlJobRemotingUtil;
+//import com.zvosframework.schedule.core.handler.annotation.ScheduleRemotingUtil;
 //import com.xxl.tool.response.Response;
 //
 //import java.util.List;

@@ -1,6 +1,6 @@
 package com.zvosframework.schedule.admin.scheduler.type.strategy;
 
-import com.zvosframework.schedule.admin.model.XxlJobInfo;
+import com.zvosframework.schedule.core.handler.annotation.ScheduleInfo;
 import com.zvosframework.schedule.admin.scheduler.type.ScheduleType;
 import com.xxl.tool.core.DateTool;
 

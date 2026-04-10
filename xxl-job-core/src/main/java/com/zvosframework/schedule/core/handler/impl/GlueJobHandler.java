@@ -1,6 +1,6 @@
 package com.zvosframework.schedule.core.handler.impl;
 
-import com.zvosframework.schedule.core.context.XxlJobHelper;
+import com.zvosframework.schedule.core.handler.annotation.ScheduleHelper;
 import com.zvosframework.schedule.core.handler.IJobHandler;
 
 /**

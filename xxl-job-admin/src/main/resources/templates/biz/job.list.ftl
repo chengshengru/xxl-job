@@ -236,7 +236,7 @@
 <textarea class="glueSource_java" style="display:none;" >
 package com.zvosframework.schedule.service.handler;
 
-import com.zvosframework.schedule.core.context.XxlJobHelper;
+import com.zvosframework.schedule.core.handler.annotation.ScheduleHelper;
 import com.zvosframework.schedule.core.handler.IJobHandler;
 
 public class DemoGlueJobHandler extends IJobHandler {

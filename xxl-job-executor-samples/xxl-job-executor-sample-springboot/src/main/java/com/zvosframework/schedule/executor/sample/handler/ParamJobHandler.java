@@ -1,6 +1,6 @@
 package com.zvosframework.schedule.executor.sample.handler;
 
-import com.zvosframework.schedule.core.handler.annotation.XxlJob;
+import com.zvosframework.schedule.core.handler.annotation.Schedule;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -15,7 +15,7 @@ public class ParamJobHandler {
     /**
      * String parameter
      */
-    @XxlJob("paramStringJob")
+    @Schedule("paramStringJob")
     public void paramStringJob(String param) {
         logger.info("XXL-JOB, String parameter: {}", param);
     }
@@ -23,7 +23,7 @@ public class ParamJobHandler {
     /**
      * Integer parameter
      */
-    @XxlJob("paramIntegerJob")
+    @Schedule("paramIntegerJob")
     public void paramIntegerJob(Integer param) {
         logger.info("XXL-JOB, Integer parameter: {}", param);
     }
@@ -31,7 +31,7 @@ public class ParamJobHandler {
     /**
      * Long parameter
      */
-    @XxlJob("paramLongJob")
+    @Schedule("paramLongJob")
     public void paramLongJob(Long param) {
         logger.info("XXL-JOB, Long parameter: {}", param);
     }
@@ -39,7 +39,7 @@ public class ParamJobHandler {
     /**
      * Boolean parameter
      */
-    @XxlJob("paramBooleanJob")
+    @Schedule("paramBooleanJob")
     public void paramBooleanJob(Boolean param) {
         logger.info("XXL-JOB, Boolean parameter: {}", param);
     }
@@ -47,7 +47,7 @@ public class ParamJobHandler {
     /**
      * Double parameter
      */
-    @XxlJob("paramDoubleJob")
+    @Schedule("paramDoubleJob")
     public void paramDoubleJob(Double param) {
         logger.info("XXL-JOB, Double parameter: {}", param);
     }
@@ -55,7 +55,7 @@ public class ParamJobHandler {
     /**
      * Custom object parameter (JSON)
      */
-    @XxlJob("paramObjectJob")
+    @Schedule("paramObjectJob")
     public void paramObjectJob(User param) {
         logger.info("XXL-JOB, Object parameter: name={}, age={}", param.getName(), param.getAge());
     }

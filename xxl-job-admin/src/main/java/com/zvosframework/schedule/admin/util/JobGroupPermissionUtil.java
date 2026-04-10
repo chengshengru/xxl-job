@@ -1,7 +1,7 @@
 package com.zvosframework.schedule.admin.util;
 
 import com.zvosframework.schedule.admin.constant.Consts;
-import com.zvosframework.schedule.admin.model.XxlJobGroup;
+import com.zvosframework.schedule.core.handler.annotation.ScheduleGroup;
 import com.xxl.sso.core.helper.XxlSsoHelper;
 import com.xxl.sso.core.model.LoginInfo;
 import com.xxl.tool.core.StringTool;

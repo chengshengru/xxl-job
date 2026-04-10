@@ -1,7 +1,7 @@
 package com.zvosframework.schedule.admin.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.zvosframework.schedule.admin.model.XxlJobLogGlue;
+import com.zvosframework.schedule.core.handler.annotation.ScheduleLogGlue;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 

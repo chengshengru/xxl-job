@@ -1,8 +1,8 @@
 package com.zvosframework.schedule.admin.scheduler.thread;
 
 import com.zvosframework.schedule.admin.constant.TriggerStatus;
-import com.zvosframework.schedule.admin.model.XxlJobInfo;
-import com.zvosframework.schedule.admin.scheduler.config.XxlJobAdminBootstrap;
+import com.zvosframework.schedule.core.handler.annotation.ScheduleInfo;
+import com.zvosframework.schedule.core.handler.annotation.ScheduleAdminBootstrap;
 import com.zvosframework.schedule.admin.scheduler.misfire.MisfireStrategyEnum;
 import com.zvosframework.schedule.admin.scheduler.trigger.TriggerTypeEnum;
 import com.zvosframework.schedule.admin.scheduler.type.ScheduleTypeEnum;

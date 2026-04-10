@@ -4,7 +4,7 @@ import com.zvosframework.schedule.core.constant.RegistType;
 import com.zvosframework.schedule.core.openapi.AdminBiz;
 import com.zvosframework.schedule.core.openapi.model.RegistryRequest;
 import com.zvosframework.schedule.core.constant.Const;
-import com.zvosframework.schedule.core.executor.XxlJobExecutor;
+import com.zvosframework.schedule.core.handler.annotation.ScheduleExecutor;
 import com.xxl.tool.response.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

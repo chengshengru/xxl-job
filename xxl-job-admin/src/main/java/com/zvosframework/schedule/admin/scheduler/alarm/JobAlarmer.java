@@ -1,7 +1,7 @@
 package com.zvosframework.schedule.admin.scheduler.alarm;
 
-import com.zvosframework.schedule.admin.model.XxlJobInfo;
-import com.zvosframework.schedule.admin.model.XxlJobLog;
+import com.zvosframework.schedule.core.handler.annotation.ScheduleInfo;
+import com.zvosframework.schedule.core.handler.annotation.ScheduleLog;
 import com.xxl.tool.core.CollectionTool;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

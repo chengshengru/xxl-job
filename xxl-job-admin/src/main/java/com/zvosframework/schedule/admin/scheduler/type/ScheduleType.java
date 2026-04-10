@@ -1,6 +1,6 @@
 package com.zvosframework.schedule.admin.scheduler.type;
 
-import com.zvosframework.schedule.admin.model.XxlJobInfo;
+import com.zvosframework.schedule.core.handler.annotation.ScheduleInfo;
 
 import java.util.Date;
 

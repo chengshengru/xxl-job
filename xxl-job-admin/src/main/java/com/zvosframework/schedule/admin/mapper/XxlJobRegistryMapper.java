@@ -1,7 +1,7 @@
 package com.zvosframework.schedule.admin.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.zvosframework.schedule.admin.model.XxlJobRegistry;
+import com.zvosframework.schedule.core.handler.annotation.ScheduleRegistry;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 

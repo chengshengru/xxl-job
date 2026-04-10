@@ -1,8 +1,8 @@
 package com.zvosframework.schedule.admin.web.xxlsso;
 
 import com.zvosframework.schedule.admin.constant.Consts;
-import com.zvosframework.schedule.admin.mapper.XxlJobUserMapper;
-import com.zvosframework.schedule.admin.model.XxlJobUser;
+import com.zvosframework.schedule.core.handler.annotation.ScheduleUserMapper;
+import com.zvosframework.schedule.core.handler.annotation.ScheduleUser;
 import com.xxl.sso.core.model.LoginInfo;
 import com.xxl.sso.core.store.LoginStore;
 import com.xxl.tool.core.MapTool;

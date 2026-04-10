@@ -1,6 +1,6 @@
 package com.zvosframework.schedule.executor.test.dify;
 
-import com.zvosframework.schedule.core.executor.impl.XxlJobSpringExecutor;
+import com.zvosframework.schedule.core.handler.annotation.ScheduleSpringExecutor;
 import io.github.imfangs.dify.client.DifyClientFactory;
 import io.github.imfangs.dify.client.DifyWorkflowClient;
 import io.github.imfangs.dify.client.enums.ResponseMode;

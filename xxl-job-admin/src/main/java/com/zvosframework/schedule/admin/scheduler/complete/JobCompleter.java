@@ -1,13 +1,13 @@
 package com.zvosframework.schedule.admin.scheduler.complete;
 
-import com.zvosframework.schedule.admin.mapper.XxlJobInfoMapper;
-import com.zvosframework.schedule.admin.mapper.XxlJobLogMapper;
-import com.zvosframework.schedule.admin.model.XxlJobInfo;
-import com.zvosframework.schedule.admin.model.XxlJobLog;
-import com.zvosframework.schedule.admin.scheduler.config.XxlJobAdminBootstrap;
+import com.zvosframework.schedule.core.handler.annotation.ScheduleInfoMapper;
+import com.zvosframework.schedule.core.handler.annotation.ScheduleLogMapper;
+import com.zvosframework.schedule.core.handler.annotation.ScheduleInfo;
+import com.zvosframework.schedule.core.handler.annotation.ScheduleLog;
+import com.zvosframework.schedule.core.handler.annotation.ScheduleAdminBootstrap;
 import com.zvosframework.schedule.admin.scheduler.trigger.TriggerTypeEnum;
 import com.zvosframework.schedule.admin.util.I18nUtil;
-import com.zvosframework.schedule.core.context.XxlJobContext;
+import com.zvosframework.schedule.core.handler.annotation.ScheduleContext;
 import com.xxl.tool.core.StringTool;
 import com.xxl.tool.response.Response;
 import jakarta.annotation.Resource;

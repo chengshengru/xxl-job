@@ -1,8 +1,8 @@
 //package com.zvosframework.schedule.admin.core.schedule;
 //
-//import com.zvosframework.schedule.admin.core.conf.XxlJobAdminConfig;
+//import com.zvosframework.schedule.core.handler.annotation.ScheduleAdminConfig;
 //import com.zvosframework.schedule.admin.core.jobbean.RemoteHttpJobBean;
-//import com.zvosframework.schedule.admin.core.model.XxlJobInfo;
+//import com.zvosframework.schedule.core.handler.annotation.ScheduleInfo;
 //import com.zvosframework.schedule.admin.core.thread.JobFailMonitorHelper;
 //import com.zvosframework.schedule.admin.core.thread.JobRegistryMonitorHelper;
 //import com.zvosframework.schedule.admin.core.thread.JobTriggerPoolHelper;

@@ -1,6 +1,6 @@
 package com.zvosframework.schedule.admin.schedule;
 
-import com.zvosframework.schedule.admin.scheduler.config.XxlJobAdminBootstrap;
+import com.zvosframework.schedule.core.handler.annotation.ScheduleAdminBootstrap;
 import com.xxl.tool.core.DateTool;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;

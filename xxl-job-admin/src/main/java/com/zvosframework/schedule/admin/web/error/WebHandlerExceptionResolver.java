@@ -1,6 +1,6 @@
 package com.zvosframework.schedule.admin.web.error;
 
-import com.zvosframework.schedule.admin.scheduler.exception.XxlJobException;
+import com.zvosframework.schedule.core.handler.annotation.ScheduleException;
 import com.xxl.tool.json.GsonTool;
 import com.xxl.tool.response.Response;
 import jakarta.servlet.http.HttpServletRequest;

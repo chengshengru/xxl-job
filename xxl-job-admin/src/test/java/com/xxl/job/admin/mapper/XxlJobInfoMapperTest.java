@@ -1,8 +1,8 @@
 package com.zvosframework.schedule.admin.mapper;
 
 import com.zvosframework.schedule.admin.constant.TriggerStatus;
-import com.zvosframework.schedule.admin.model.XxlJobInfo;
-import com.zvosframework.schedule.admin.scheduler.config.XxlJobAdminBootstrap;
+import com.zvosframework.schedule.core.handler.annotation.ScheduleInfo;
+import com.zvosframework.schedule.core.handler.annotation.ScheduleAdminBootstrap;
 import com.zvosframework.schedule.admin.scheduler.misfire.MisfireStrategyEnum;
 import com.zvosframework.schedule.admin.scheduler.type.ScheduleTypeEnum;
 import com.xxl.tool.core.CollectionTool;

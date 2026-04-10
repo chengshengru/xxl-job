@@ -1,7 +1,7 @@
 package com.zvosframework.schedule.executor.sample.frameless.jobhandler;
 
-import com.zvosframework.schedule.core.context.XxlJobHelper;
-import com.zvosframework.schedule.core.handler.annotation.XxlJob;
+import com.zvosframework.schedule.core.handler.annotation.ScheduleHelper;
+import com.zvosframework.schedule.core.handler.annotation.Schedule;
 import com.xxl.tool.core.StringTool;
 import com.xxl.tool.json.GsonTool;
 import com.xxl.tool.http.HttpTool;
@@ -23,7 +23,7 @@ import java.util.concurrent.TimeUnit;
  *
  * 开发步骤：
  *      1、任务开发：在Spring Bean实例中，开发Job方法；
- *      2、注解配置：为Job方法添加注解 "@XxlJob(value="自定义jobhandler名称", init = "JobHandler初始化方法", destroy = "JobHandler销毁方法")"，注解value值对应的是调度中心新建任务的JobHandler属性的值。
+ *      2、注解配置：为Job方法添加注解 "@Schedule(value="自定义jobhandler名称", init = "JobHandler初始化方法", destroy = "JobHandler销毁方法")"，注解value值对应的是调度中心新建任务的JobHandler属性的值。
  *      3、执行日志：需要通过 "XxlJobHelper.log" 打印执行日志；
  *      4、任务结果：默认任务结果为 "成功" 状态，不需要主动设置；如有诉求，比如设置任务结果为失败，可以通过 "XxlJobHelper.handleFail/handleSuccess" 自主设置任务结果；
  *
@@ -36,7 +36,7 @@ public class SampleXxlJob {
     /**
      * 1、简单任务示例（Bean模式）
      */
-    @XxlJob("demoJobHandler")
+    @Schedule("demoJobHandler")
     public void demoJobHandler() throws Exception {
         XxlJobHelper.log("XXL-JOB, Hello World.");
 
@@ -51,7 +51,7 @@ public class SampleXxlJob {
     /**
      * 2、分片广播任务
      */
-    @XxlJob("shardingJobHandler")
+    @Schedule("shardingJobHandler")
     public void shardingJobHandler() throws Exception {
 
         // 分片参数
@@ -77,7 +77,7 @@ public class SampleXxlJob {
      *
      *  参数示例："ls -a" 或者 "pwd"
      */
-    @XxlJob("commandJobHandler")
+    @Schedule("commandJobHandler")
     public void commandJobHandler() throws Exception {
         String command = XxlJobHelper.getJobParam();
         int exitValue = -1;
@@ -162,7 +162,7 @@ public class SampleXxlJob {
      *      }
      *  </pre>
      */
-    @XxlJob("httpJobHandler")
+    @Schedule("httpJobHandler")
     public void httpJobHandler() throws Exception {
 
         // param data
@@ -373,7 +373,7 @@ public class SampleXxlJob {
     /**
      * 5、生命周期任务示例：任务初始化与销毁时，支持自定义相关逻辑；
      */
-    @XxlJob(value = "demoJobHandler2", init = "init", destroy = "destroy")
+    @Schedule(value = "demoJobHandler2", init = "init", destroy = "destroy")
     public void demoJobHandler2() throws Exception {
         XxlJobHelper.log("XXL-JOB, Hello World.");
     }

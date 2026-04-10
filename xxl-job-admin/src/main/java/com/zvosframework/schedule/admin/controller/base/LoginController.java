@@ -1,7 +1,7 @@
 package com.zvosframework.schedule.admin.controller.base;
 
-import com.zvosframework.schedule.admin.mapper.XxlJobUserMapper;
-import com.zvosframework.schedule.admin.model.XxlJobUser;
+import com.zvosframework.schedule.core.handler.annotation.ScheduleUserMapper;
+import com.zvosframework.schedule.core.handler.annotation.ScheduleUser;
 import com.zvosframework.schedule.admin.util.I18nUtil;
 import com.xxl.sso.core.annotation.XxlSso;
 import com.xxl.sso.core.helper.XxlSsoHelper;

@@ -1,8 +1,7 @@
 package com.zvosframework.schedule.core.executor.impl;
 
-import com.zvosframework.schedule.core.executor.XxlJobExecutor;
 import com.zvosframework.schedule.core.glue.GlueFactory;
-import com.zvosframework.schedule.core.handler.annotation.XxlJob;
+import com.zvosframework.schedule.core.handler.annotation.Schedule;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
@@ -177,7 +176,7 @@ public class XxlJobSpringExecutor extends XxlJobExecutor implements ApplicationC
             /**
              * 2.2、skip by BeanDefinition Class
              *      - skip beanClass is null
-             *      - skip method annotation(@XxlJob) is null
+             *      - skip method annotation(@Schedule) is null
              */
             Class<?> beanClass = applicationContext.getType(beanName, false);
             if (beanClass == null) {

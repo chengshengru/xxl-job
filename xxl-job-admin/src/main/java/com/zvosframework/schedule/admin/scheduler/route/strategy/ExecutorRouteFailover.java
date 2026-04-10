@@ -1,6 +1,6 @@
 package com.zvosframework.schedule.admin.scheduler.route.strategy;
 
-import com.zvosframework.schedule.admin.scheduler.config.XxlJobAdminBootstrap;
+import com.zvosframework.schedule.core.handler.annotation.ScheduleAdminBootstrap;
 import com.zvosframework.schedule.admin.scheduler.route.ExecutorRouter;
 import com.zvosframework.schedule.admin.util.I18nUtil;
 import com.zvosframework.schedule.core.openapi.ExecutorBiz;

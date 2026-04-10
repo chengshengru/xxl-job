@@ -1,6 +1,6 @@
 package com.zvosframework.schedule.admin.service.impl;
 
-import com.zvosframework.schedule.admin.scheduler.config.XxlJobAdminBootstrap;
+import com.zvosframework.schedule.core.handler.annotation.ScheduleAdminBootstrap;
 import com.zvosframework.schedule.core.openapi.AdminBiz;
 import com.zvosframework.schedule.core.openapi.model.CallbackRequest;
 import com.zvosframework.schedule.core.openapi.model.RegistryRequest;

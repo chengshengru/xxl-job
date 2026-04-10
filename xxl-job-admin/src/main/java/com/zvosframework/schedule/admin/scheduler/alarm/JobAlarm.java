@@ -1,7 +1,7 @@
 package com.zvosframework.schedule.admin.scheduler.alarm;
 
-import com.zvosframework.schedule.admin.model.XxlJobInfo;
-import com.zvosframework.schedule.admin.model.XxlJobLog;
+import com.zvosframework.schedule.core.handler.annotation.ScheduleInfo;
+import com.zvosframework.schedule.core.handler.annotation.ScheduleLog;
 
 /**
  * @author xuxueli 2020-01-19

@@ -1,9 +1,9 @@
 package com.zvosframework.schedule.admin.controller.biz;
 
-import com.zvosframework.schedule.admin.mapper.XxlJobInfoMapper;
-import com.zvosframework.schedule.admin.mapper.XxlJobLogGlueMapper;
-import com.zvosframework.schedule.admin.model.XxlJobInfo;
-import com.zvosframework.schedule.admin.model.XxlJobLogGlue;
+import com.zvosframework.schedule.core.handler.annotation.ScheduleInfoMapper;
+import com.zvosframework.schedule.core.handler.annotation.ScheduleLogGlueMapper;
+import com.zvosframework.schedule.core.handler.annotation.ScheduleInfo;
+import com.zvosframework.schedule.core.handler.annotation.ScheduleLogGlue;
 import com.zvosframework.schedule.admin.util.I18nUtil;
 import com.zvosframework.schedule.admin.util.JobGroupPermissionUtil;
 import com.zvosframework.schedule.core.glue.GlueTypeEnum;

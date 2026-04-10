@@ -1,6 +1,6 @@
 package com.zvosframework.schedule.admin.scheduler.misfire.strategy;
 
-import com.zvosframework.schedule.admin.scheduler.config.XxlJobAdminBootstrap;
+import com.zvosframework.schedule.core.handler.annotation.ScheduleAdminBootstrap;
 import com.zvosframework.schedule.admin.scheduler.misfire.MisfireHandler;
 import com.zvosframework.schedule.admin.scheduler.trigger.TriggerTypeEnum;
 import org.slf4j.Logger;

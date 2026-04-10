@@ -1,8 +1,8 @@
 package com.zvosframework.schedule.admin.scheduler.thread;
 
-import com.zvosframework.schedule.admin.model.XxlJobGroup;
-import com.zvosframework.schedule.admin.model.XxlJobRegistry;
-import com.zvosframework.schedule.admin.scheduler.config.XxlJobAdminBootstrap;
+import com.zvosframework.schedule.core.handler.annotation.ScheduleGroup;
+import com.zvosframework.schedule.core.handler.annotation.ScheduleRegistry;
+import com.zvosframework.schedule.core.handler.annotation.ScheduleAdminBootstrap;
 import com.zvosframework.schedule.core.constant.RegistType;
 import com.zvosframework.schedule.core.openapi.model.RegistryRequest;
 import com.zvosframework.schedule.core.constant.Const;

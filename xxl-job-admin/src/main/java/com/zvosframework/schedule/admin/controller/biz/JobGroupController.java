@@ -1,12 +1,12 @@
 package com.zvosframework.schedule.admin.controller.biz;
 
 import com.zvosframework.schedule.admin.constant.Consts;
-import com.zvosframework.schedule.admin.model.XxlJobGroup;
-import com.zvosframework.schedule.admin.model.XxlJobRegistry;
+import com.zvosframework.schedule.core.handler.annotation.ScheduleGroup;
+import com.zvosframework.schedule.core.handler.annotation.ScheduleRegistry;
 import com.zvosframework.schedule.admin.util.I18nUtil;
-import com.zvosframework.schedule.admin.mapper.XxlJobGroupMapper;
-import com.zvosframework.schedule.admin.mapper.XxlJobInfoMapper;
-import com.zvosframework.schedule.admin.mapper.XxlJobRegistryMapper;
+import com.zvosframework.schedule.core.handler.annotation.ScheduleGroupMapper;
+import com.zvosframework.schedule.core.handler.annotation.ScheduleInfoMapper;
+import com.zvosframework.schedule.core.handler.annotation.ScheduleRegistryMapper;
 import com.zvosframework.schedule.core.constant.Const;
 import com.zvosframework.schedule.core.constant.RegistType;
 import com.xxl.sso.core.annotation.XxlSso;

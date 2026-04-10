@@ -2,7 +2,7 @@
 //
 //import com.zvosframework.schedule.core.openapi.ExecutorBiz;
 //import com.zvosframework.schedule.core.openapi.model.*;
-//import com.zvosframework.schedule.core.util.XxlJobRemotingUtil;
+//import com.zvosframework.schedule.core.handler.annotation.ScheduleRemotingUtil;
 //import com.xxl.tool.response.Response;
 //
 ///**

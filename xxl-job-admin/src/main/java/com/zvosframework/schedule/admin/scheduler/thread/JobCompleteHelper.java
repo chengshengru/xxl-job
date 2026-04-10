@@ -1,10 +1,10 @@
 package com.zvosframework.schedule.admin.scheduler.thread;
 
-import com.zvosframework.schedule.admin.model.XxlJobLog;
-import com.zvosframework.schedule.admin.scheduler.config.XxlJobAdminBootstrap;
+import com.zvosframework.schedule.core.handler.annotation.ScheduleLog;
+import com.zvosframework.schedule.core.handler.annotation.ScheduleAdminBootstrap;
 import com.zvosframework.schedule.admin.util.I18nUtil;
 import com.zvosframework.schedule.core.openapi.model.CallbackRequest;
-import com.zvosframework.schedule.core.context.XxlJobContext;
+import com.zvosframework.schedule.core.handler.annotation.ScheduleContext;
 import com.xxl.tool.core.DateTool;
 import com.xxl.tool.response.Response;
 import org.slf4j.Logger;

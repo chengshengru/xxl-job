@@ -1,7 +1,7 @@
 package com.zvosframework.schedule.core.executor.impl;
 
-import com.zvosframework.schedule.core.executor.XxlJobExecutor;
-import com.zvosframework.schedule.core.handler.annotation.XxlJob;
+import com.zvosframework.schedule.core.handler.annotation.ScheduleExecutor;
+import com.zvosframework.schedule.core.handler.annotation.Schedule;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

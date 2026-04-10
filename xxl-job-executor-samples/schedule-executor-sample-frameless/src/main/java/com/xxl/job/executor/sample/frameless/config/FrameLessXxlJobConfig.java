@@ -1,7 +1,7 @@
 package com.zvosframework.schedule.executor.sample.frameless.config;
 
-import com.zvosframework.schedule.executor.sample.frameless.jobhandler.SampleXxlJob;
-import com.zvosframework.schedule.core.executor.impl.XxlJobSimpleExecutor;
+import com.zvosframework.schedule.core.handler.annotation.Schedule;
+import com.zvosframework.schedule.core.handler.annotation.ScheduleSimpleExecutor;
 import com.xxl.tool.core.PropTool;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
