@@ -1,6 +1,6 @@
-package com.xxl.job.admin.core.util;
+package com.zvosframework.schedule.admin.core.util;
 
-import com.xxl.job.admin.scheduler.cron.CronExpression;
+import com.zvosframework.schedule.admin.scheduler.cron.CronExpression;
 import com.xxl.tool.core.DateTool;
 import org.junit.jupiter.api.Test;
 

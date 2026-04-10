@@ -1,4 +1,4 @@
-package com.xxl.job.admin.controller;
+package com.zvosframework.schedule.admin.controller;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;

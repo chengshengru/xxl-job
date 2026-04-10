@@ -1,6 +1,6 @@
-package com.xxl.job.admin.schedule.route;
+package com.zvosframework.schedule.admin.schedule.route;
 
-import com.xxl.job.admin.scheduler.route.strategy.ExecutorRouteConsistentHash;
+import com.zvosframework.schedule.admin.scheduler.route.strategy.ExecutorRouteConsistentHash;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

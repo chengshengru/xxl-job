@@ -1,6 +1,6 @@
-package com.xxl.job.admin.mapper;
+package com.zvosframework.schedule.admin.mapper;
 
-import com.xxl.job.admin.model.XxlJobLogReport;
+import com.zvosframework.schedule.admin.model.XxlJobLogReport;
 import com.xxl.tool.core.DateTool;
 import jakarta.annotation.Resource;
 import org.junit.jupiter.api.Test;

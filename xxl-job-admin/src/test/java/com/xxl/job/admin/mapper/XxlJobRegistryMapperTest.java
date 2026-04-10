@@ -1,7 +1,7 @@
-package com.xxl.job.admin.mapper;
+package com.zvosframework.schedule.admin.mapper;
 
-import com.xxl.job.admin.model.XxlJobRegistry;
-import com.xxl.job.core.constant.RegistType;
+import com.zvosframework.schedule.admin.model.XxlJobRegistry;
+import com.zvosframework.schedule.core.constant.RegistType;
 import jakarta.annotation.Resource;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

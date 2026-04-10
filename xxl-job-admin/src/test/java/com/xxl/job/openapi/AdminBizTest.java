@@ -1,11 +1,11 @@
-package com.xxl.job.openapi;
+package com.zvosframework.schedule.openapi;
 
-import com.xxl.job.core.constant.RegistType;
-import com.xxl.job.core.openapi.AdminBiz;
-import com.xxl.job.core.openapi.model.CallbackRequest;
-import com.xxl.job.core.openapi.model.RegistryRequest;
-import com.xxl.job.core.context.XxlJobContext;
-import com.xxl.job.core.constant.Const;
+import com.zvosframework.schedule.core.constant.RegistType;
+import com.zvosframework.schedule.core.openapi.AdminBiz;
+import com.zvosframework.schedule.core.openapi.model.CallbackRequest;
+import com.zvosframework.schedule.core.openapi.model.RegistryRequest;
+import com.zvosframework.schedule.core.context.XxlJobContext;
+import com.zvosframework.schedule.core.constant.Const;
 import com.xxl.tool.http.HttpTool;
 import com.xxl.tool.response.Response;
 import org.junit.jupiter.api.Test;

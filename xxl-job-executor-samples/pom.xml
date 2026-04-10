@@ -2,17 +2,17 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>com.xuxueli</groupId>
-        <artifactId>xxl-job</artifactId>
+        <groupId>com.zvosframework</groupId>
+        <artifactId>schedule</artifactId>
         <version>3.4.1-SNAPSHOT</version>
     </parent>
-    <artifactId>xxl-job-executor-samples</artifactId>
+    <artifactId>schedule-executor-samples</artifactId>
     <packaging>pom</packaging>
 
     <modules>
-        <module>xxl-job-executor-sample-frameless</module>
-        <module>xxl-job-executor-sample-springboot</module>
-        <module>xxl-job-executor-sample-springboot-ai</module>
+        <module>schedule-executor-sample-frameless</module>
+        <module>schedule-executor-sample-springboot</module>
+        <module>schedule-executor-sample-springboot-ai</module>
     </modules>
 
     <properties>

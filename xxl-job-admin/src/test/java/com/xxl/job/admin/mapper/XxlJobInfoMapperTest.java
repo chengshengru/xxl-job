@@ -1,10 +1,10 @@
-package com.xxl.job.admin.mapper;
+package com.zvosframework.schedule.admin.mapper;
 
-import com.xxl.job.admin.constant.TriggerStatus;
-import com.xxl.job.admin.model.XxlJobInfo;
-import com.xxl.job.admin.scheduler.config.XxlJobAdminBootstrap;
-import com.xxl.job.admin.scheduler.misfire.MisfireStrategyEnum;
-import com.xxl.job.admin.scheduler.type.ScheduleTypeEnum;
+import com.zvosframework.schedule.admin.constant.TriggerStatus;
+import com.zvosframework.schedule.admin.model.XxlJobInfo;
+import com.zvosframework.schedule.admin.scheduler.config.XxlJobAdminBootstrap;
+import com.zvosframework.schedule.admin.scheduler.misfire.MisfireStrategyEnum;
+import com.zvosframework.schedule.admin.scheduler.type.ScheduleTypeEnum;
 import com.xxl.tool.core.CollectionTool;
 import com.xxl.tool.core.DateTool;
 import jakarta.annotation.Resource;

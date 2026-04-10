@@ -1,4 +1,4 @@
-package com.xxl.job.admin.util;
+package com.zvosframework.schedule.admin.util;
 
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;

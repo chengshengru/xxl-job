@@ -234,10 +234,10 @@
 <input type="hidden" name="glueRemark" value="GLUE代码初始化" >
 <textarea name="glueSource" style="display:none;" ></textarea>
 <textarea class="glueSource_java" style="display:none;" >
-package com.xxl.job.service.handler;
+package com.zvosframework.schedule.service.handler;
 
-import com.xxl.job.core.context.XxlJobHelper;
-import com.xxl.job.core.handler.IJobHandler;
+import com.zvosframework.schedule.core.context.XxlJobHelper;
+import com.zvosframework.schedule.core.handler.IJobHandler;
 
 public class DemoGlueJobHandler extends IJobHandler {
 

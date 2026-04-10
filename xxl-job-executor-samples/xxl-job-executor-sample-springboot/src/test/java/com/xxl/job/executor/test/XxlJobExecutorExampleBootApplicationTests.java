@@ -1,4 +1,4 @@
-package com.xxl.job.executor.test;
+package com.zvosframework.schedule.executor.test;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

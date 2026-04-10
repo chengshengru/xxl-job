@@ -1,10 +1,10 @@
-package com.xxl.job.openapi;
+package com.zvosframework.schedule.openapi;
 
-import com.xxl.job.core.constant.Const;
-import com.xxl.job.core.openapi.ExecutorBiz;
-import com.xxl.job.core.openapi.model.*;
-import com.xxl.job.core.constant.ExecutorBlockStrategyEnum;
-import com.xxl.job.core.glue.GlueTypeEnum;
+import com.zvosframework.schedule.core.constant.Const;
+import com.zvosframework.schedule.core.openapi.ExecutorBiz;
+import com.zvosframework.schedule.core.openapi.model.*;
+import com.zvosframework.schedule.core.constant.ExecutorBlockStrategyEnum;
+import com.zvosframework.schedule.core.glue.GlueTypeEnum;
 import com.xxl.tool.http.HttpTool;
 import com.xxl.tool.response.Response;
 import org.junit.jupiter.api.Assertions;

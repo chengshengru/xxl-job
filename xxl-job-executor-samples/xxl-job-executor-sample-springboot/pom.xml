@@ -4,11 +4,11 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>com.xuxueli</groupId>
-        <artifactId>xxl-job-executor-samples</artifactId>
+        <groupId>com.zvosframework</groupId>
+        <artifactId>schedule-executor-samples</artifactId>
         <version>3.4.1-SNAPSHOT</version>
     </parent>
-    <artifactId>xxl-job-executor-sample-springboot</artifactId>
+    <artifactId>schedule-executor-sample-springboot</artifactId>
     <packaging>jar</packaging>
 
     <name>${project.artifactId}</name>
@@ -30,10 +30,10 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- xxl-job-core -->
+        <!-- schedule-core -->
         <dependency>
-            <groupId>com.xuxueli</groupId>
-            <artifactId>xxl-job-core</artifactId>
+            <groupId>com.zvosframework</groupId>
+            <artifactId>schedule-core</artifactId>
         </dependency>
 
     </dependencies>

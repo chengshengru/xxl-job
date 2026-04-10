@@ -1,0 +1,16 @@
+package com.zvosframework.schedule.admin.scheduler.type.strategy;
+
+import com.zvosframework.schedule.admin.model.XxlJobInfo;
+import com.zvosframework.schedule.admin.scheduler.type.ScheduleType;
+
+import java.util.Date;
+
+public class NoneScheduleType extends ScheduleType {
+
+    @Override
+    public Date generateNextTriggerTime(XxlJobInfo jobInfo, Date fromTime) throws Exception {
+        // generate none trigger-time
+        return null;
+    }
+
+}
