@@ -21,8 +21,13 @@ import java.util.Date;
 /**
  * Created by xuxueli on 17/3/1.
  */
-public class ExecutorBizImpl implements ExecutorBiz {
+public class ExecutorBizImpl implements ExecutorBiz { 
     private static Logger logger = LoggerFactory.getLogger(ExecutorBizImpl.class);
+    private com.xxl.job.core.thread.TriggerCallbackThread triggerCallbackThread;
+    
+    public void setTriggerCallbackThread(com.xxl.job.core.thread.TriggerCallbackThread triggerCallbackThread) {
+        this.triggerCallbackThread = triggerCallbackThread;
+    }
 
     @Override
     public Response<String> beat() {
@@ -142,7 +147,7 @@ public class ExecutorBizImpl implements ExecutorBiz {
 
         // replace thread (new or exists invalid)
         if (jobThread == null) {
-            jobThread = XxlJobExecutor.registJobThread(triggerRequest.getJobId(), jobHandler, removeOldReason);
+            jobThread = XxlJobExecutor.registJobThread(triggerRequest.getJobId(), jobHandler, removeOldReason, triggerCallbackThread);
         }
 
         // push data to queue

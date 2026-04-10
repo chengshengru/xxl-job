@@ -39,16 +39,30 @@ public class XxlJobSpringExecutor extends XxlJobExecutor implements ApplicationC
     public void setExcludedPackage(String excludedPackage) {
         this.excludedPackage = excludedPackage;
     }
-
-
-    // ---------------------- start / stop ----------------------
-
-    /**
-     * start
-      */
+    
     @Override
     public void afterSingletonsInstantiated() {
-
+        // inject spring managed beans
+        if (applicationContext != null) {
+            try {
+                setTriggerCallbackThread(applicationContext.getBean(TriggerCallbackThread.class));
+                setJobLogFileCleanThread(applicationContext.getBean(JobLogFileCleanThread.class));
+                setExecutorRegistryThread(applicationContext.getBean(ExecutorRegistryThread.class));
+            } catch (Exception e) {
+                logger.warn("xxl-job: Spring managed beans injection failed, fallback to manual creation.", e);
+                // fallback to manual creation if beans not found
+                if (getTriggerCallbackThread() == null) {
+                    setTriggerCallbackThread(new TriggerCallbackThread());
+                }
+                if (getJobLogFileCleanThread() == null) {
+                    setJobLogFileCleanThread(new JobLogFileCleanThread());
+                }
+                if (getExecutorRegistryThread() == null) {
+                    setExecutorRegistryThread(new ExecutorRegistryThread());
+                }
+            }
+        }
+        
         // scan JobHandler method
         scanJobHandlerMethod(applicationContext);
 
@@ -62,6 +76,43 @@ public class XxlJobSpringExecutor extends XxlJobExecutor implements ApplicationC
             throw new RuntimeException(e);
         }
     }
+    
+    // getter methods for fallback creation
+    public TriggerCallbackThread getTriggerCallbackThread() {
+        // use reflection to access private field
+        try {
+            java.lang.reflect.Field field = XxlJobExecutor.class.getDeclaredField("triggerCallbackThread");
+            field.setAccessible(true);
+            return (TriggerCallbackThread) field.get(this);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+    
+    public JobLogFileCleanThread getJobLogFileCleanThread() {
+        // use reflection to access private field
+        try {
+            java.lang.reflect.Field field = XxlJobExecutor.class.getDeclaredField("jobLogFileCleanThread");
+            field.setAccessible(true);
+            return (JobLogFileCleanThread) field.get(this);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+    
+    public ExecutorRegistryThread getExecutorRegistryThread() {
+        // use reflection to access private field
+        try {
+            java.lang.reflect.Field field = XxlJobExecutor.class.getDeclaredField("executorRegistryThread");
+            field.setAccessible(true);
+            return (ExecutorRegistryThread) field.get(this);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+
+    // ---------------------- start / stop ----------------------
 
     /**
      * stop

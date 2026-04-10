@@ -46,6 +46,23 @@ public class XxlJobExecutor  {
     private int port;
     private String logPath;
     private int logRetentionDays;
+    
+    // ---------------------- Spring managed beans ----------------------
+    private TriggerCallbackThread triggerCallbackThread;
+    private JobLogFileCleanThread jobLogFileCleanThread;
+    private ExecutorRegistryThread executorRegistryThread;
+    
+    public void setTriggerCallbackThread(TriggerCallbackThread triggerCallbackThread) {
+        this.triggerCallbackThread = triggerCallbackThread;
+    }
+    
+    public void setJobLogFileCleanThread(JobLogFileCleanThread jobLogFileCleanThread) {
+        this.jobLogFileCleanThread = jobLogFileCleanThread;
+    }
+    
+    public void setExecutorRegistryThread(ExecutorRegistryThread executorRegistryThread) {
+        this.executorRegistryThread = executorRegistryThread;
+    }
 
     public void setAdminAddresses(String adminAddresses) {
         this.adminAddresses = adminAddresses;
@@ -96,10 +113,14 @@ public class XxlJobExecutor  {
 
 
         // 1、init JobLogFileCleanThread
-        JobLogFileCleanThread.getInstance().start(logRetentionDays);
+        if (jobLogFileCleanThread != null) {
+            jobLogFileCleanThread.start(logRetentionDays);
+        }
 
         // 2、init TriggerCallbackThread
-        TriggerCallbackThread.getInstance().start();
+        if (triggerCallbackThread != null) {
+            triggerCallbackThread.start();
+        }
 
         // 3、init executor-server
         initEmbedServer(address, ip, port, appname, accessToken);
@@ -137,10 +158,14 @@ public class XxlJobExecutor  {
 
 
         // 2、destroy JobLogFileCleanThread
-        JobLogFileCleanThread.getInstance().toStop();
+        if (jobLogFileCleanThread != null) {
+            jobLogFileCleanThread.toStop();
+        }
 
         // 3、destroy TriggerCallbackThread
-        TriggerCallbackThread.getInstance().toStop();
+        if (triggerCallbackThread != null) {
+            triggerCallbackThread.toStop();
+        }
 
     }
 
@@ -208,6 +233,7 @@ public class XxlJobExecutor  {
 
         // start
         embedServer = new EmbedServer();
+        embedServer.setExecutorRegistryThread(executorRegistryThread);
         embedServer.start(address, port, appname, accessToken);
     }
 
@@ -289,8 +315,9 @@ public class XxlJobExecutor  {
 
     // ---------------------- job thread repository ----------------------
     private static ConcurrentMap<Integer, JobThread> jobThreadRepository = new ConcurrentHashMap<Integer, JobThread>();
-    public static JobThread registJobThread(int jobId, IJobHandler handler, String removeOldReason){
+    public static JobThread registJobThread(int jobId, IJobHandler handler, String removeOldReason, TriggerCallbackThread triggerCallbackThread){
         JobThread newJobThread = new JobThread(jobId, handler);
+        newJobThread.setTriggerCallbackThread(triggerCallbackThread);
         newJobThread.start();
         logger.info(">>>>>>>>>>> xxl-job regist JobThread success, jobId:{}, handler:{}", new Object[]{jobId, handler});
 
@@ -301,6 +328,11 @@ public class XxlJobExecutor  {
         }
 
         return newJobThread;
+    }
+    
+    // backward compatibility
+    public static JobThread registJobThread(int jobId, IJobHandler handler, String removeOldReason){
+        return registJobThread(jobId, handler, removeOldReason, null);
     }
 
     public static JobThread removeJobThread(int jobId, String removeOldReason){

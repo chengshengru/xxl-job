@@ -33,17 +33,13 @@ import java.util.concurrent.TimeUnit;
 public class TriggerCallbackThread {
     private static final Logger logger = LoggerFactory.getLogger(TriggerCallbackThread.class);
 
-    private static final TriggerCallbackThread instance = new TriggerCallbackThread();
-    public static TriggerCallbackThread getInstance(){
-        return instance;
-    }
-
     /**
      * job results callback queue
      */
     private final LinkedBlockingQueue<CallbackRequest> callBackQueue = new LinkedBlockingQueue<>();
-    public static void pushCallBack(CallbackRequest callback){
-        getInstance().callBackQueue.add(callback);
+    
+    public void pushCallBack(CallbackRequest callback){
+        callBackQueue.add(callback);
         logger.debug(">>>>>>>>>>> xxl-job, push callback request, logId:{}", callback.getLogId());
     }
 
@@ -72,13 +68,13 @@ public class TriggerCallbackThread {
                 // normal callback
                 while(!toStop){
                     try {
-                        CallbackRequest callback = getInstance().callBackQueue.take();
+                        CallbackRequest callback = callBackQueue.take();
                         if (callback != null) {
 
                             // collect callback data
                             List<CallbackRequest> callbackParamList = new ArrayList<>();
                             callbackParamList.add(callback);                                            // add one element
-                            int drainToNum = getInstance().callBackQueue.drainTo(callbackParamList);    // drainTo other all elements
+                            int drainToNum = callBackQueue.drainTo(callbackParamList);    // drainTo other all elements
 
                             // do callback, will retry if error
                             if (CollectionTool.isNotEmpty(callbackParamList)) {
@@ -96,7 +92,7 @@ public class TriggerCallbackThread {
                 try {
                     // collect callback data
                     List<CallbackRequest> callbackParamList = new ArrayList<>();
-                    int drainToNum = getInstance().callBackQueue.drainTo(callbackParamList);
+                    int drainToNum = callBackQueue.drainTo(callbackParamList);
 
                     // do callback
                     if (CollectionTool.isNotEmpty(callbackParamList)) {

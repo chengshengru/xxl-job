@@ -28,13 +28,15 @@ public class JobThread extends Thread{
 	private int jobId;
 	private IJobHandler handler;
 	private LinkedBlockingQueue<TriggerRequest> triggerQueue;
-	private Set<Long> triggerLogIdSet;		// avoid repeat trigger for the same TRIGGER_LOG_ID
+	private Set<Long> triggerLogIdSet;        // avoid repeat trigger for the same TRIGGER_LOG_ID
 
 	private volatile boolean toStop = false;
 	private String stopReason;
 
     private boolean running = false;    // if running job
-	private int idleTimes = 0;			// idle times
+	private int idleTimes = 0;            // idle times
+	
+	private TriggerCallbackThread triggerCallbackThread;
 
 
 	public JobThread(int jobId, IJobHandler handler) {
@@ -86,6 +88,10 @@ public class JobThread extends Thread{
         return running || triggerQueue.size()>0;
     }
 
+    public void setTriggerCallbackThread(TriggerCallbackThread triggerCallbackThread) {
+        this.triggerCallbackThread = triggerCallbackThread;
+    }
+    
     @Override
 	public void run() {
 
@@ -180,7 +186,7 @@ public class JobThread extends Thread{
 
 				} else {
 					if (idleTimes > 30) {
-						if(triggerQueue.isEmpty()) {	// avoid concurrent trigger causes jobId-lost
+						if(triggerQueue.isEmpty()) {    // avoid concurrent trigger causes jobId-lost
 							XxlJobExecutor.removeJobThread(jobId, "excutor idle times over limit.");
 						}
 					}
@@ -203,20 +209,24 @@ public class JobThread extends Thread{
                     // callback handler info
                     if (!toStop) {
                         // common
-                        TriggerCallbackThread.pushCallBack(new CallbackRequest(
-                        		triggerParam.getLogId(),
-								triggerParam.getLogDateTime(),
-								XxlJobContext.getXxlJobContext().getHandleCode(),
-								XxlJobContext.getXxlJobContext().getHandleMsg() )
-						);
+                        if (triggerCallbackThread != null) {
+                            triggerCallbackThread.pushCallBack(new CallbackRequest(
+                            		triggerParam.getLogId(),
+									triggerParam.getLogDateTime(),
+									XxlJobContext.getXxlJobContext().getHandleCode(),
+									XxlJobContext.getXxlJobContext().getHandleMsg() )
+							);
+                        }
                     } else {
                         // is killed
-                        TriggerCallbackThread.pushCallBack(new CallbackRequest(
-                        		triggerParam.getLogId(),
-								triggerParam.getLogDateTime(),
-								XxlJobContext.HANDLE_CODE_FAIL,
-								stopReason + " [job running, killed]" )
-						);
+                        if (triggerCallbackThread != null) {
+                            triggerCallbackThread.pushCallBack(new CallbackRequest(
+                            		triggerParam.getLogId(),
+									triggerParam.getLogDateTime(),
+									XxlJobContext.HANDLE_CODE_FAIL,
+									stopReason + " [job running, killed]" )
+							);
+                        }
                     }
                 }
             }
@@ -227,12 +237,14 @@ public class JobThread extends Thread{
 			TriggerRequest triggerParam = triggerQueue.poll();
 			if (triggerParam!=null) {
 				// is killed
-				TriggerCallbackThread.pushCallBack(new CallbackRequest(
-						triggerParam.getLogId(),
-						triggerParam.getLogDateTime(),
-						XxlJobContext.HANDLE_CODE_FAIL,
-						stopReason + " [job not executed, in the job queue, killed.]")
-				);
+				if (triggerCallbackThread != null) {
+					triggerCallbackThread.pushCallBack(new CallbackRequest(
+							triggerParam.getLogId(),
+							triggerParam.getLogDateTime(),
+							XxlJobContext.HANDLE_CODE_FAIL,
+							stopReason + " [job not executed, in the job queue, killed.]")
+					);
+				}
 			}
 		}
 

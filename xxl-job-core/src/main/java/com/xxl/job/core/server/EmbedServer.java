@@ -33,9 +33,24 @@ public class EmbedServer {
 
     private ExecutorBiz executorBiz;
     private Thread thread;
+    private ExecutorRegistryThread executorRegistryThread;
+    
+    public void setExecutorRegistryThread(ExecutorRegistryThread executorRegistryThread) {
+        this.executorRegistryThread = executorRegistryThread;
+    }
 
     public void start(final String address, final int port, final String appname, final String accessToken) {
         executorBiz = new ExecutorBizImpl();
+        // set triggerCallbackThread if available
+        if (executorBiz instanceof ExecutorBizImpl && triggerCallbackThread != null) {
+            try {
+                java.lang.reflect.Field field = ExecutorBizImpl.class.getDeclaredField("triggerCallbackThread");
+                field.setAccessible(true);
+                field.set(executorBiz, triggerCallbackThread);
+            } catch (Exception e) {
+                logger.warn("xxl-job: Failed to set triggerCallbackThread to ExecutorBizImpl.", e);
+            }
+        }
         thread = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -248,11 +263,15 @@ public class EmbedServer {
 
     public void startRegistry(final String appname, final String address) {
         // start registry
-        ExecutorRegistryThread.getInstance().start(appname, address);
+        if (executorRegistryThread != null) {
+            executorRegistryThread.start(appname, address);
+        }
     }
 
     public void stopRegistry() {
         // stop registry
-        ExecutorRegistryThread.getInstance().toStop();
+        if (executorRegistryThread != null) {
+            executorRegistryThread.toStop();
+        }
     }
 }
