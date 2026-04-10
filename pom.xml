@@ -11,9 +11,9 @@
 	<url>https://www.xuxueli.com/</url>
 
 	<modules>
-		<module>xxl-job-core</module>
-		<module>xxl-job-admin</module>
-		<module>xxl-job-executor-samples</module>
+		<module>schedule-core</module>
+		<module>schedule-admin</module>
+		<module>schedule-executor-samples</module>
     </modules>
 
 	<properties>
@@ -155,10 +155,10 @@
 				<version>${mysql-connector-j.version}</version>
 			</dependency>
 
-			<!-- xxl-job-core -->
+			<!-- schedule-core -->
 			<dependency>
 				<groupId>com.zvosframework</groupId>
-				<artifactId>xxl-job-core</artifactId>
+				<artifactId>schedule-core</artifactId>
 				<version>${project.parent.version}</version>
 			</dependency>
 
@@ -224,7 +224,7 @@
 				<activeByDefault>true</activeByDefault>
 			</activation>
 			<modules>
-				<module>xxl-job-core</module>
+				<module>schedule-core</module>
 			</modules>
 			<build>
 				<plugins>
@@ -296,11 +296,11 @@
 						<configuration>
 							<publishingServerId>central</publishingServerId>
 							<excludeArtifacts>
-								<artifact>xxl-job-admin</artifact>
-								<artifact>xxl-job-executor-samples</artifact>
-								<artifact>xxl-job-executor-sample-frameless</artifact>
-								<artifact>xxl-job-executor-sample-springboot</artifact>
-								<artifact>xxl-job-executor-sample-springboot-ai</artifact>
+								<artifact>schedule-admin</artifact>
+								<artifact>schedule-executor-samples</artifact>
+								<artifact>schedule-executor-sample-frameless</artifact>
+								<artifact>schedule-executor-sample-springboot</artifact>
+								<artifact>schedule-executor-sample-springboot-ai</artifact>
 							</excludeArtifacts>
 						</configuration>
 					</plugin>
