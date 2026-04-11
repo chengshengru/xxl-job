@@ -29,24 +29,24 @@ services:
     networks:
       - schedule-network
 
-  schedule-admin:
+  schedule-central:
     # 4、本地Build设置，如果期望使用推动DockerHub的镜像，可以注释当前启用的image、build配置，并启用如下设置版本的image配置；
-    #image: xuxueli/schedule-admin:{version}
-    image: xuxueli/schedule-admin:local
+    #image: xuxueli/schedule-central:{version}
+    image: xuxueli/schedule-central:local
     build:
-      context: ../schedule-admin
+      context: ../schedule-central
       dockerfile: Dockerfile
-    container_name: schedule-admin
+    container_name: schedule-central
     environment:
       # 5、数据库密码设置，需要与上文Mysql中保持一致：
       PARAMS: >-
         --spring.datasource.url=jdbc:mysql://mysql:3306/schedule?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&serverTimezone=Asia/Shanghai
         --spring.datasource.username=root 
         --spring.datasource.password=${MYSQL_ROOT_PASSWORD}
-        --server.port=${SCHEDULE_ADMIN_PORT}
-        --server.servlet.context-path=${SCHEDULE_ADMIN_CONTEXT_PATH}
+        --server.port=${SCHEDULE_CENTRAL_PORT}
+        --server.servlet.context-path=${SCHEDULE_CENTRAL_CONTEXT_PATH}
     ports:
-      - "${SCHEDULE_ADMIN_PORT}:${SCHEDULE_ADMIN_PORT}"
+      - "${SCHEDULE_CENTRAL_PORT}:${SCHEDULE_CENTRAL_PORT}"
     depends_on:
       mysql:
         condition: service_healthy
@@ -61,11 +61,11 @@ services:
     container_name: schedule-executor-sample-springboot
     environment:
       PARAMS: >-
-        --schedule.admin.addresses=http://schedule-admin:${SCHEDULE_ADMIN_PORT}${SCHEDULE_ADMIN_CONTEXT_PATH:-/}
+        --schedule.admin.addresses=http://schedule-central:${SCHEDULE_CENTRAL_PORT}${SCHEDULE_CENTRAL_CONTEXT_PATH:-/}
     ports:
       - "9999:9999"
     depends_on:
-      schedule-admin:
+      schedule-central:
         condition: service_started
     networks:
       - schedule-network

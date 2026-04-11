@@ -12,7 +12,7 @@
 
 	<modules>
 		<module>schedule-core</module>
-		<module>schedule-admin</module>
+		<module>schedule-central</module>
 		<module>schedule-executor-samples</module>
     </modules>
 
@@ -296,12 +296,12 @@
 						<configuration>
 							<publishingServerId>central</publishingServerId>
 							<excludeArtifacts>
-								<artifact>schedule-admin</artifact>
-								<artifact>schedule-executor-samples</artifact>
-								<artifact>schedule-executor-sample-frameless</artifact>
-								<artifact>schedule-executor-sample-springboot</artifact>
-								<artifact>schedule-executor-sample-springboot-ai</artifact>
-							</excludeArtifacts>
+					<artifact>schedule-central</artifact>
+					<artifact>schedule-executor-samples</artifact>
+					<artifact>schedule-executor-sample-frameless</artifact>
+					<artifact>schedule-executor-sample-springboot</artifact>
+					<artifact>schedule-executor-sample-springboot-ai</artifact>
+				</excludeArtifacts>
 						</configuration>
 					</plugin>
 				</plugins>
