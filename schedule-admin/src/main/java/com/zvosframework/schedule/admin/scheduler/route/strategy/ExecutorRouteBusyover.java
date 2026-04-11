@@ -22,7 +22,7 @@ public class ExecutorRouteBusyover extends ExecutorRouter {
             // beat
             Response<String> idleBeatResult = null;
             try {
-                ExecutorBiz executorBiz = XxlJobAdminBootstrap.getExecutorBiz(address);
+                ExecutorBiz executorBiz = JobAdminBootstrap.getExecutorBiz(address);
                 idleBeatResult = executorBiz.idleBeat(new IdleBeatRequest(triggerParam.getJobId()));
             } catch (Exception e) {
                 logger.error(e.getMessage(), e);

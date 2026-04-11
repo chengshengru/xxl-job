@@ -9,7 +9,7 @@
 ///**
 // * annotation for job handler
 // *
-// * will be replaced by {@link com.zvosframework.schedule.core.handler.annotation.XxlJob}
+// * will be replaced by {@link com.zvosframework.schedule.core.handler.annotation.Job}
 // *
 // * @author 2016-5-17 21:06:49
 // */

@@ -20,7 +20,7 @@ public class DifyTest {
 
     // ignore
     @MockitoBean
-    private XxlJobSpringExecutor xxlJobSpringExecutor;
+    private JobSpringExecutor xxlJobSpringExecutor;
 
     @Test
     public void test() throws Exception {

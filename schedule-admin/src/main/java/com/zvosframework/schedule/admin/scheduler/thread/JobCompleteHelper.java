@@ -75,19 +75,19 @@ public class JobCompleteHelper {
 					try {
 						// 任务结果丢失处理：调度记录停留在 "运行中" 状态超过10min，且对应执行器心跳注册失败不在线，则将本地调度主动标记失败；
 						Date losedTime = DateTool.addMinutes(new Date(), -10);
-						List<Long> losedJobIds  = XxlJobAdminBootstrap.getInstance().getXxlJobLogMapper().findLostJobIds(losedTime);
+						List<Long> losedJobIds  = JobAdminBootstrap.getInstance().getJobLogMapper().findLostJobIds(losedTime);
 
 						if (losedJobIds!=null && losedJobIds.size()>0) {
 							for (Long logId: losedJobIds) {
 
-								XxlJobLog jobLog = new XxlJobLog();
+								JobLog jobLog = new JobLog();
 								jobLog.setId(logId);
 
 								jobLog.setHandleTime(new Date());
-								jobLog.setHandleCode(XxlJobContext.HANDLE_CODE_FAIL);
+								jobLog.setHandleCode(JobContext.HANDLE_CODE_FAIL);
 								jobLog.setHandleMsg( I18nUtil.getString("joblog_lost_fail") );
 
-								XxlJobAdminBootstrap.getInstance().getJobCompleter().complete(jobLog);
+								JobAdminBootstrap.getInstance().getJobCompleter().complete(jobLog);
 							}
 
 						}
@@ -155,7 +155,7 @@ public class JobCompleteHelper {
 
 	private Response<String> doCallback(CallbackRequest handleCallbackParam) {
 		// valid log item
-		XxlJobLog log = XxlJobAdminBootstrap.getInstance().getXxlJobLogMapper().load(handleCallbackParam.getLogId());
+		JobLog log = JobAdminBootstrap.getInstance().getJobLogMapper().load(handleCallbackParam.getLogId());
 		if (log == null) {
 			return Response.ofFail( "log item not found.");
 		}
@@ -176,7 +176,7 @@ public class JobCompleteHelper {
 		log.setHandleTime(new Date());
 		log.setHandleCode(handleCallbackParam.getHandleCode());
 		log.setHandleMsg(handleMsg.toString());
-		XxlJobAdminBootstrap.getInstance().getJobCompleter().complete(log);
+		JobAdminBootstrap.getInstance().getJobCompleter().complete(log);
 
 		return Response.ofSuccess();
 	}

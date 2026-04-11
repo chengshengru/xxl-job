@@ -26,7 +26,7 @@ public class ExecutorRegistryThread {
             logger.warn(">>>>>>>>>>> xxl-job, executor registry config fail, appname is null.");
             return;
         }
-        if (XxlJobExecutor.getAdminBizList() == null) {
+        if (JobExecutor.getAdminBizList() == null) {
             logger.warn(">>>>>>>>>>> xxl-job, executor registry config fail, adminAddresses is null.");
             return;
         }
@@ -39,7 +39,7 @@ public class ExecutorRegistryThread {
                 while (!toStop) {
                     try {
                         RegistryRequest registryParam = new RegistryRequest(RegistType.EXECUTOR.name(), appname, address);
-                        for (AdminBiz adminBiz: XxlJobExecutor.getAdminBizList()) {
+                        for (AdminBiz adminBiz: JobExecutor.getAdminBizList()) {
                             try {
                                 Response<String> registryResult = adminBiz.registry(registryParam);
                                 if (registryResult!=null && registryResult.isSuccess()) {
@@ -75,7 +75,7 @@ public class ExecutorRegistryThread {
                 // registry remove
                 try {
                     RegistryRequest registryParam = new RegistryRequest(RegistType.EXECUTOR.name(), appname, address);
-                    for (AdminBiz adminBiz: XxlJobExecutor.getAdminBizList()) {
+                    for (AdminBiz adminBiz: JobExecutor.getAdminBizList()) {
                         try {
                             Response<String> registryResult = adminBiz.registryRemove(registryParam);
                             if (registryResult!=null && registryResult.isSuccess()) {

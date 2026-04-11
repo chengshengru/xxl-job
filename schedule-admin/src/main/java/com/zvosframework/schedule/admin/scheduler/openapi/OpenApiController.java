@@ -48,8 +48,8 @@ public class OpenApiController {
         }
 
         // valid token
-        if (StringTool.isNotBlank(XxlJobAdminBootstrap.getInstance().getAccessToken())
-                && !XxlJobAdminBootstrap.getInstance().getAccessToken().equals(accesstoken)) {
+        if (StringTool.isNotBlank(JobAdminBootstrap.getInstance().getAccessToken())
+                && !JobAdminBootstrap.getInstance().getAccessToken().equals(accesstoken)) {
             return Response.ofFail("The access token is wrong.");
         }
 

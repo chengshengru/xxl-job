@@ -34,14 +34,14 @@ public class JobCodeController {
 	private static final Logger logger = LoggerFactory.getLogger(JobCodeController.class);
 	
 	@Resource
-	private XxlJobInfoMapper xxlJobInfoMapper;
+	private JobInfoMapper xxlJobInfoMapper;
 	@Resource
-	private XxlJobLogGlueMapper xxlJobLogGlueMapper;
+	private JobLogGlueMapper xxlJobLogGlueMapper;
 
 	@RequestMapping
 	public String index(HttpServletRequest request, Model model, @RequestParam("jobId") int jobId) {
-		XxlJobInfo jobInfo = xxlJobInfoMapper.loadById(jobId);
-		List<XxlJobLogGlue> jobLogGlues = xxlJobLogGlueMapper.findByJobId(jobId);
+		JobInfo jobInfo = xxlJobInfoMapper.loadById(jobId);
+		List<JobLogGlue> jobLogGlues = xxlJobLogGlueMapper.findByJobId(jobId);
 
 		if (jobInfo == null) {
 			throw new RuntimeException(I18nUtil.getString("jobinfo_glue_jobid_invalid"));
@@ -78,7 +78,7 @@ public class JobCodeController {
 		if (glueRemark.length()<4 || glueRemark.length()>100) {
 			return Response.ofFail(I18nUtil.getString("jobinfo_glue_remark_limit"));
 		}
-		XxlJobInfo existsJobInfo = xxlJobInfoMapper.loadById(id);
+		JobInfo existsJobInfo = xxlJobInfoMapper.loadById(id);
 		if (existsJobInfo == null) {
 			return Response.ofFail( I18nUtil.getString("jobinfo_glue_jobid_invalid"));
 		}
@@ -95,7 +95,7 @@ public class JobCodeController {
 		xxlJobInfoMapper.update(existsJobInfo);
 
 		// log old code
-		XxlJobLogGlue xxlJobLogGlue = new XxlJobLogGlue();
+		JobLogGlue xxlJobLogGlue = new JobLogGlue();
 		xxlJobLogGlue.setJobId(existsJobInfo.getId());
 		xxlJobLogGlue.setGlueType(existsJobInfo.getGlueType());
 		xxlJobLogGlue.setGlueSource(glueSource);

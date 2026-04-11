@@ -48,13 +48,13 @@ public class JobLogController {
 	private static final Logger logger = LoggerFactory.getLogger(JobLogController.class);
 
 	@Resource
-	private XxlJobGroupMapper xxlJobGroupMapper;
+	private JobGroupMapper xxlJobGroupMapper;
 	@Resource
-	public XxlJobInfoMapper xxlJobInfoMapper;
+	public JobInfoMapper xxlJobInfoMapper;
 	@Resource
-	public XxlJobLogMapper xxlJobLogMapper;
+	public JobLogMapper xxlJobLogMapper;
     @Autowired
-    private XxlJobService xxlJobService;
+    private JobService xxlJobService;
 
 	@RequestMapping
 	public String index(HttpServletRequest request,
@@ -64,19 +64,19 @@ public class JobLogController {
 
 		// 1、init JobGroupList
 		// find all jobGroup
-		List<XxlJobGroup> jobGroupListTotal =  xxlJobGroupMapper.findAll();
+		List<JobGroup> jobGroupListTotal =  xxlJobGroupMapper.findAll();
 
 		// filter JobGroupList
-		List<XxlJobGroup> jobGroupList = JobGroupPermissionUtil.filterJobGroupByPermission(request, jobGroupListTotal);
+		List<JobGroup> jobGroupList = JobGroupPermissionUtil.filterJobGroupByPermission(request, jobGroupListTotal);
 		if (CollectionTool.isEmpty(jobGroupList)) {
-			throw new XxlJobException(I18nUtil.getString("jobgroup_empty"));
+			throw new JobException(I18nUtil.getString("jobgroup_empty"));
 		}
-		List<Integer> jobGroupIds = jobGroupList.stream().map(XxlJobGroup::getId).toList();
+		List<Integer> jobGroupIds = jobGroupList.stream().map(JobGroup::getId).toList();
 
 		// 2、check jobId
 		if (jobId > 0) {
 			// valid jobId
-			XxlJobInfo jobInfo = xxlJobInfoMapper.loadById(jobId);
+			JobInfo jobInfo = xxlJobInfoMapper.loadById(jobId);
 			if (jobInfo == null) {
 				throw new RuntimeException(I18nUtil.getString("jobinfo_field_id") + I18nUtil.getString("system_invalid"));
 			}
@@ -90,8 +90,8 @@ public class JobLogController {
 		}
 
 		// 4、init jobInfoList
-		List<XxlJobInfo> jobInfoList = xxlJobInfoMapper.getJobsByGroup(jobGroup);
-		List<Integer> jobIds = jobInfoList.stream().map(XxlJobInfo::getId).toList();
+		List<JobInfo> jobInfoList = xxlJobInfoMapper.getJobsByGroup(jobGroup);
+		List<Integer> jobIds = jobInfoList.stream().map(JobInfo::getId).toList();
 
 		// 5、init JobId, default 0
 		if (!jobIds.contains(jobId)) {
@@ -109,7 +109,7 @@ public class JobLogController {
 	
 	@RequestMapping("/pageList")
 	@ResponseBody
-	public Response<PageModel<XxlJobLog>> pageList(HttpServletRequest request,
+	public Response<PageModel<JobLog>> pageList(HttpServletRequest request,
 										@RequestParam(required = false, defaultValue = "0") int offset,
 										@RequestParam(required = false, defaultValue = "10") int pagesize,
 										@RequestParam int jobGroup,
@@ -137,11 +137,11 @@ public class JobLogController {
 		}
 		
 		// page query
-		List<XxlJobLog> list = xxlJobLogMapper.pageList(offset, pagesize, jobGroup, jobId, triggerTimeStart, triggerTimeEnd, logStatus);
+		List<JobLog> list = xxlJobLogMapper.pageList(offset, pagesize, jobGroup, jobId, triggerTimeStart, triggerTimeEnd, logStatus);
 		int list_count = xxlJobLogMapper.pageListCount(offset, pagesize, jobGroup, jobId, triggerTimeStart, triggerTimeEnd, logStatus);
 
 		// package result
-		PageModel<XxlJobLog> pageModel = new PageModel<>();
+		PageModel<JobLog> pageModel = new PageModel<>();
 		pageModel.setData(list);
 		pageModel.setTotal(list_count);
 
@@ -181,12 +181,12 @@ public class JobLogController {
 	@ResponseBody
 	public Response<String> logKill(HttpServletRequest request, @RequestParam("id") long id){
 		// base check
-		XxlJobLog log = xxlJobLogMapper.load(id);
-		XxlJobInfo jobInfo = xxlJobInfoMapper.loadById(log.getJobId());
+		JobLog log = xxlJobLogMapper.load(id);
+		JobInfo jobInfo = xxlJobInfoMapper.loadById(log.getJobId());
 		if (jobInfo==null) {
 			return Response.ofFail(I18nUtil.getString("jobinfo_glue_jobid_invalid"));
 		}
-		if (XxlJobContext.HANDLE_CODE_SUCCESS != log.getTriggerCode()) {
+		if (JobContext.HANDLE_CODE_SUCCESS != log.getTriggerCode()) {
 			return Response.ofFail( I18nUtil.getString("joblog_kill_log_limit"));
 		}
 
@@ -196,18 +196,18 @@ public class JobLogController {
 		// request of kill
 		Response<String> runResult = null;
 		try {
-			ExecutorBiz executorBiz = XxlJobAdminBootstrap.getExecutorBiz(log.getExecutorAddress());
+			ExecutorBiz executorBiz = JobAdminBootstrap.getExecutorBiz(log.getExecutorAddress());
 			runResult = executorBiz.kill(new KillRequest(jobInfo.getId()));
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			runResult = Response.ofFail( e.getMessage());
 		}
 
-		if (XxlJobContext.HANDLE_CODE_SUCCESS == runResult.getCode()) {
-			log.setHandleCode(XxlJobContext.HANDLE_CODE_FAIL);
+		if (JobContext.HANDLE_CODE_SUCCESS == runResult.getCode()) {
+			log.setHandleCode(JobContext.HANDLE_CODE_FAIL);
 			log.setHandleMsg( I18nUtil.getString("joblog_kill_log_byman")+":" + (runResult.getMsg()!=null?runResult.getMsg():""));
 			log.setHandleTime(new Date());
-			XxlJobAdminBootstrap.getInstance().getJobCompleter().complete(log);
+			JobAdminBootstrap.getInstance().getJobCompleter().complete(log);
 			return Response.ofSuccess(runResult.getMsg());
 		} else {
 			return Response.ofFail(runResult.getMsg());
@@ -268,7 +268,7 @@ public class JobLogController {
 	public String logDetailPage(HttpServletRequest request, @RequestParam("id") long id, Model model){
 
 		// base check
-		XxlJobLog jobLog = xxlJobLogMapper.load(id);
+		JobLog jobLog = xxlJobLogMapper.load(id);
 		if (jobLog == null) {
 			throw new RuntimeException(I18nUtil.getString("joblog_logid_invalid"));
 		}
@@ -277,7 +277,7 @@ public class JobLogController {
 		JobGroupPermissionUtil.validJobGroupPermission(request, jobLog.getJobGroup());
 
 		// load jobInfo
-		XxlJobInfo jobInfo = xxlJobInfoMapper.loadById(jobLog.getJobId());
+		JobInfo jobInfo = xxlJobInfoMapper.loadById(jobLog.getJobId());
 
 		// data
 		model.addAttribute("triggerCode", jobLog.getTriggerCode());
@@ -292,13 +292,13 @@ public class JobLogController {
 	public Response<LogResult> logDetailCat(@RequestParam("logId") long logId, @RequestParam("fromLineNum") int fromLineNum){
 		try {
 			// valid
-			XxlJobLog jobLog = xxlJobLogMapper.load(logId);	// todo, need to improve performance
+			JobLog jobLog = xxlJobLogMapper.load(logId);	// todo, need to improve performance
 			if (jobLog == null) {
 				return Response.ofFail(I18nUtil.getString("joblog_logid_invalid"));
 			}
 
 			// log cat
-			ExecutorBiz executorBiz = XxlJobAdminBootstrap.getExecutorBiz(jobLog.getExecutorAddress());
+			ExecutorBiz executorBiz = JobAdminBootstrap.getExecutorBiz(jobLog.getExecutorAddress());
 			Response<LogResult> logResult = executorBiz.log(new LogRequest(jobLog.getTriggerTime().getTime(), logId, fromLineNum));
 
 			// is end

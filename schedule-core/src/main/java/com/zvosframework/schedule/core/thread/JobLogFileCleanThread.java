@@ -34,7 +34,7 @@ public class JobLogFileCleanThread {
                 while (!toStop) {
                     try {
                         // clean log dir, over logRetentionDays
-                        File[] childDirs = new File(XxlJobFileAppender.getLogPath()).listFiles();
+                        File[] childDirs = new File(JobFileAppender.getLogPath()).listFiles();
                         if (childDirs!=null && childDirs.length>0) {
 
                             // today

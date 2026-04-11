@@ -29,7 +29,7 @@ public class JobTriggerPoolHelper {
     public void start(){
         fastTriggerPool = new ThreadPoolExecutor(
                 10,
-                XxlJobAdminBootstrap.getInstance().getTriggerPoolFastMax(),
+                JobAdminBootstrap.getInstance().getTriggerPoolFastMax(),
                 60L,
                 TimeUnit.SECONDS,
                 new LinkedBlockingQueue<Runnable>(2000),
@@ -48,7 +48,7 @@ public class JobTriggerPoolHelper {
 
         slowTriggerPool = new ThreadPoolExecutor(
                 10,
-                XxlJobAdminBootstrap.getInstance().getTriggerPoolSlowMax(),
+                JobAdminBootstrap.getInstance().getTriggerPoolSlowMax(),
                 60L,
                 TimeUnit.SECONDS,
                 new LinkedBlockingQueue<Runnable>(5000),
@@ -120,7 +120,7 @@ public class JobTriggerPoolHelper {
 
                 try {
                     // do trigger
-                    XxlJobAdminBootstrap.getInstance().getJobTrigger().trigger(jobId, triggerType, failRetryCount, executorShardingParam, executorParam, addressList);
+                    JobAdminBootstrap.getInstance().getJobTrigger().trigger(jobId, triggerType, failRetryCount, executorShardingParam, executorParam, addressList);
                 } catch (Throwable e) {
                     logger.error(e.getMessage(), e);
                 } finally {

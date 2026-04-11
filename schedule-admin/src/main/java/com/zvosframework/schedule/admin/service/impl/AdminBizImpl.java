@@ -17,17 +17,17 @@ public class AdminBizImpl implements AdminBiz {
 
     @Override
     public Response<String> callback(List<CallbackRequest> callbackRequestList) {
-        return XxlJobAdminBootstrap.getInstance().getJobCompleteHelper().callback(callbackRequestList);
+        return JobAdminBootstrap.getInstance().getJobCompleteHelper().callback(callbackRequestList);
     }
 
     @Override
     public Response<String> registry(RegistryRequest registryRequest) {
-        return XxlJobAdminBootstrap.getInstance().getJobRegistryHelper().registry(registryRequest);
+        return JobAdminBootstrap.getInstance().getJobRegistryHelper().registry(registryRequest);
     }
 
     @Override
     public Response<String> registryRemove(RegistryRequest registryRequest) {
-        return XxlJobAdminBootstrap.getInstance().getJobRegistryHelper().registryRemove(registryRequest);
+        return JobAdminBootstrap.getInstance().getJobRegistryHelper().registryRemove(registryRequest);
     }
 
 }

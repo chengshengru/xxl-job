@@ -35,11 +35,11 @@ public class JobTrigger {
 
 
     @Resource
-    private XxlJobInfoMapper xxlJobInfoMapper;
+    private JobInfoMapper xxlJobInfoMapper;
     @Resource
-    private XxlJobGroupMapper xxlJobGroupMapper;
+    private JobGroupMapper xxlJobGroupMapper;
     @Resource
-    private XxlJobLogMapper xxlJobLogMapper;
+    private JobLogMapper xxlJobLogMapper;
 
 
     /**
@@ -68,7 +68,7 @@ public class JobTrigger {
                                String addressList) {
 
         // load data
-        XxlJobInfo jobInfo = xxlJobInfoMapper.loadById(jobId);
+        JobInfo jobInfo = xxlJobInfoMapper.loadById(jobId);
         if (jobInfo == null) {
             logger.warn(">>>>>>>>>>>> trigger fail, jobId invalid，jobId={}", jobId);
             return;
@@ -77,7 +77,7 @@ public class JobTrigger {
             jobInfo.setExecutorParam(executorParam);
         }
         int finalFailRetryCount = failRetryCount>=0?failRetryCount:jobInfo.getExecutorFailRetryCount();
-        XxlJobGroup group = xxlJobGroupMapper.load(jobInfo.getJobGroup());
+        JobGroup group = xxlJobGroupMapper.load(jobInfo.getJobGroup());
 
         // cover addressList
         if (StringTool.isNotBlank(addressList)) {
@@ -131,8 +131,8 @@ public class JobTrigger {
      * @param index                     sharding index
      * @param total                     sharding index
      */
-    private void processTrigger(XxlJobGroup group,
-                                XxlJobInfo jobInfo,
+    private void processTrigger(JobGroup group,
+                                JobInfo jobInfo,
                                 int finalFailRetryCount,
                                 TriggerTypeEnum triggerType,
                                 Date triggerTime,
@@ -145,7 +145,7 @@ public class JobTrigger {
         String shardingParam = (ExecutorRouteStrategyEnum.SHARDING_BROADCAST==executorRouteStrategyEnum)?String.valueOf(index).concat("/").concat(String.valueOf(total)):null;
 
         // 1、save log-id
-        XxlJobLog jobLog = new XxlJobLog();
+        JobLog jobLog = new JobLog();
         jobLog.setJobGroup(jobInfo.getJobGroup());
         jobLog.setJobId(jobInfo.getId());
         jobLog.setTriggerTime(triggerTime);
@@ -184,7 +184,7 @@ public class JobTrigger {
                 }
             }
         } else {
-            routeAddressResult = Response.of(XxlJobContext.HANDLE_CODE_FAIL, I18nUtil.getString("jobconf_trigger_address_empty"));
+            routeAddressResult = Response.of(JobContext.HANDLE_CODE_FAIL, I18nUtil.getString("jobconf_trigger_address_empty"));
         }
 
         // 4、trigger remote executor
@@ -192,7 +192,7 @@ public class JobTrigger {
         if (address != null) {
             triggerResult = doTrigger(triggerParam, address);
         } else {
-            triggerResult = Response.of(XxlJobContext.HANDLE_CODE_FAIL, "Address Router Fail.");
+            triggerResult = Response.of(JobContext.HANDLE_CODE_FAIL, "Address Router Fail.");
         }
 
         // 5、collection trigger info
@@ -258,7 +258,7 @@ public class JobTrigger {
     private Response<String> doTrigger(TriggerRequest triggerParam, String address){
         try {
             // build client
-            ExecutorBiz executorBiz = XxlJobAdminBootstrap.getExecutorBiz(address);
+            ExecutorBiz executorBiz = JobAdminBootstrap.getExecutorBiz(address);
 
             // invoke
             Response<String> runResult = executorBiz.run(triggerParam);
@@ -274,7 +274,7 @@ public class JobTrigger {
             return runResult;
         } catch (Exception e) {
             logger.error(">>>>>>>>>>> xxl-job trigger error, please check if the executor[{}] is running.", address, e);
-            return Response.of(XxlJobContext.HANDLE_CODE_FAIL, ThrowableTool.toString(e));
+            return Response.of(JobContext.HANDLE_CODE_FAIL, ThrowableTool.toString(e));
         }
     }
 

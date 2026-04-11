@@ -25,7 +25,7 @@ public class JobAlarmer {
     /**
      * job alarm
      */
-    public boolean alarm(XxlJobInfo info, XxlJobLog jobLog) {
+    public boolean alarm(JobInfo info, JobLog jobLog) {
 
         boolean result = false;
         if (CollectionTool.isNotEmpty(jobAlarmList)) {

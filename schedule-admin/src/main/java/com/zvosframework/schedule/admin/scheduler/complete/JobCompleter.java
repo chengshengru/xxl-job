@@ -28,15 +28,15 @@ public class JobCompleter {
 
 
     @Resource
-    private XxlJobInfoMapper xxlJobInfoMapper;
+    private JobInfoMapper xxlJobInfoMapper;
     @Resource
-    private XxlJobLogMapper xxlJobLogMapper;
+    private JobLogMapper xxlJobLogMapper;
 
 
     /**
      * complate job (limit only once)
      */
-    public int complete(XxlJobLog xxlJobLog) {
+    public int complete(JobLog xxlJobLog) {
 
         // 1、process child-job
         processChildJob(xxlJobLog);
@@ -57,12 +57,12 @@ public class JobCompleter {
     /**
      * do somethind to finish job
      */
-    private void processChildJob(XxlJobLog xxlJobLog){
+    private void processChildJob(JobLog xxlJobLog){
 
         // 1、handle success, to trigger child job
         String triggerChildMsg = null;
-        if (XxlJobContext.HANDLE_CODE_SUCCESS == xxlJobLog.getHandleCode()) {
-            XxlJobInfo xxlJobInfo = xxlJobInfoMapper.loadById(xxlJobLog.getJobId());
+        if (JobContext.HANDLE_CODE_SUCCESS == xxlJobLog.getHandleCode()) {
+            JobInfo xxlJobInfo = xxlJobInfoMapper.loadById(xxlJobLog.getJobId());
 
             // process child job
             if (xxlJobInfo!=null && StringTool.isNotBlank(xxlJobInfo.getChildJobId())) {
@@ -77,12 +77,12 @@ public class JobCompleter {
                     if (childJobId > 0) {
                         // valid
                         if (childJobId == xxlJobLog.getJobId()) {
-                            logger.debug(">>>>>>>>>>> xxl-job, XxlJobCompleter-finishJob ignore childJobId,  childJobId {} is self.", childJobId);
+                            logger.debug(">>>>>>>>>>> xxl-job, JobCompleter-finishJob ignore childJobId,  childJobId {} is self.", childJobId);
                             continue;
                         }
 
                         // trigger child job
-                        XxlJobAdminBootstrap.getInstance().getJobTriggerPoolHelper().trigger(childJobId, TriggerTypeEnum.PARENT, -1, null, null, null);
+                        JobAdminBootstrap.getInstance().getJobTriggerPoolHelper().trigger(childJobId, TriggerTypeEnum.PARENT, -1, null, null, null);
                         Response<String> triggerChildResult = Response.ofSuccess();
 
                         // add msg

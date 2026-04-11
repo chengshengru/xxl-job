@@ -22,7 +22,7 @@ public class GlueJobHandler extends IJobHandler {
 
 	@Override
 	public void execute() throws Exception {
-		XxlJobHelper.log("----------- glue.version:"+ glueUpdatetime +" -----------");
+		JobHelper.log("----------- glue.version:"+ glueUpdatetime +" -----------");
 		jobHandler.execute();
 	}
 

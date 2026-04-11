@@ -26,7 +26,7 @@ public class SimpleLoginStore implements LoginStore {
 
 
     @Resource
-    private XxlJobUserMapper xxlJobUserMapper;
+    private JobUserMapper xxlJobUserMapper;
 
 
     @Override
@@ -59,7 +59,7 @@ public class SimpleLoginStore implements LoginStore {
     public Response<LoginInfo> get(String userId) {
 
         // load login-user
-        XxlJobUser user = xxlJobUserMapper.loadById(Integer.parseInt(userId));
+        JobUser user = xxlJobUserMapper.loadById(Integer.parseInt(userId));
         if (user == null) {
             return Response.ofFail("userId invalid.");
         }

@@ -17,6 +17,6 @@ public abstract class ScheduleType {
      * @param jobInfo       job info
      * @param fromTime      from time
      */
-    public abstract Date generateNextTriggerTime(XxlJobInfo jobInfo, Date fromTime) throws Exception;
+    public abstract Date generateNextTriggerTime(JobInfo jobInfo, Date fromTime) throws Exception;
 
 }

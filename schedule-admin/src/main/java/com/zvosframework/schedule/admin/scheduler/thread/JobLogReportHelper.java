@@ -61,7 +61,7 @@ public class JobLogReportHelper {
                             Date todayTo = itemDay.getTime();
 
                             // refresh log-report every minute
-                            XxlJobLogReport xxlJobLogReport = new XxlJobLogReport();
+                            JobLogReport xxlJobLogReport = new JobLogReport();
                             xxlJobLogReport.setTriggerDay(todayFrom);
                             xxlJobLogReport.setRunningCount(0);
                             xxlJobLogReport.setSucCount(0);
@@ -69,7 +69,7 @@ public class JobLogReportHelper {
                             xxlJobLogReport.setUpdateTime(new Date());
 
                             // fill count-data
-                            Map<String, Object> triggerCountMap = XxlJobAdminBootstrap.getInstance().getXxlJobLogMapper().findLogReport(todayFrom, todayTo);
+                            Map<String, Object> triggerCountMap = JobAdminBootstrap.getInstance().getJobLogMapper().findLogReport(todayFrom, todayTo);
                             if (triggerCountMap!=null && !triggerCountMap.isEmpty()) {
                                 int triggerDayCount = triggerCountMap.containsKey("triggerDayCount")?Integer.parseInt(String.valueOf(triggerCountMap.get("triggerDayCount"))):0;
                                 int triggerDayCountRunning = triggerCountMap.containsKey("triggerDayCountRunning")?Integer.parseInt(String.valueOf(triggerCountMap.get("triggerDayCountRunning"))):0;
@@ -82,9 +82,9 @@ public class JobLogReportHelper {
                             }
 
                             // do refresh:
-                            XxlJobAdminBootstrap.getInstance().getXxlJobLogReportMapper().saveOrUpdate(xxlJobLogReport);      // 0-fail; 1-save suc; 2-update suc;
+                            JobAdminBootstrap.getInstance().getJobLogReportMapper().saveOrUpdate(xxlJobLogReport);      // 0-fail; 1-save suc; 2-update suc;
                             /*if (ret < 1) {
-                                XxlJobAdminBootstrap.getInstance().getXxlJobLogReportMapper().save(xxlJobLogReport);
+                                JobAdminBootstrap.getInstance().getJobLogReportMapper().save(xxlJobLogReport);
                             }*/
                         }
 
@@ -96,12 +96,12 @@ public class JobLogReportHelper {
 
                     // 2、log-clean: switch open & once each day
                     try {
-                        if (XxlJobAdminBootstrap.getInstance().getLogretentiondays()>0
+                        if (JobAdminBootstrap.getInstance().getLogretentiondays()>0
                                 && System.currentTimeMillis() - lastCleanLogTime > 24*60*60*1000) {
 
                             // expire-time
                             Calendar expiredDay = Calendar.getInstance();
-                            expiredDay.add(Calendar.DAY_OF_MONTH, -1 * XxlJobAdminBootstrap.getInstance().getLogretentiondays());
+                            expiredDay.add(Calendar.DAY_OF_MONTH, -1 * JobAdminBootstrap.getInstance().getLogretentiondays());
                             expiredDay.set(Calendar.HOUR_OF_DAY, 0);
                             expiredDay.set(Calendar.MINUTE, 0);
                             expiredDay.set(Calendar.SECOND, 0);
@@ -111,9 +111,9 @@ public class JobLogReportHelper {
                             // clean expired log
                             List<Long> logIds = null;
                             do {
-                                logIds = XxlJobAdminBootstrap.getInstance().getXxlJobLogMapper().findClearLogIds(0, 0, clearBeforeTime, 0, 1000);
+                                logIds = JobAdminBootstrap.getInstance().getJobLogMapper().findClearLogIds(0, 0, clearBeforeTime, 0, 1000);
                                 if (logIds!=null && !logIds.isEmpty()) {
-                                    XxlJobAdminBootstrap.getInstance().getXxlJobLogMapper().clearLog(logIds);
+                                    JobAdminBootstrap.getInstance().getJobLogMapper().clearLog(logIds);
                                 }
                             } while (logIds!=null && !logIds.isEmpty());
 

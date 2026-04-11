@@ -33,11 +33,11 @@ import java.util.*;
 public class JobGroupController {
 
 	@Resource
-	public XxlJobInfoMapper xxlJobInfoMapper;
+	public JobInfoMapper xxlJobInfoMapper;
 	@Resource
-	public XxlJobGroupMapper xxlJobGroupMapper;
+	public JobGroupMapper xxlJobGroupMapper;
 	@Resource
-	private XxlJobRegistryMapper xxlJobRegistryMapper;
+	private JobRegistryMapper xxlJobRegistryMapper;
 
 	@RequestMapping
 	@XxlSso(role = Consts.ADMIN_ROLE)
@@ -48,17 +48,17 @@ public class JobGroupController {
 	@RequestMapping("/pageList")
 	@ResponseBody
 	@XxlSso(role = Consts.ADMIN_ROLE)
-	public Response<PageModel<XxlJobGroup>> pageList(@RequestParam(required = false, defaultValue = "0") int offset,
+	public Response<PageModel<JobGroup>> pageList(@RequestParam(required = false, defaultValue = "0") int offset,
 													 @RequestParam(required = false, defaultValue = "10") int pagesize,
 													 String appname,
 													 String title) {
 
 		// page query
-		List<XxlJobGroup> list = xxlJobGroupMapper.pageList(offset, pagesize, appname, title);
+		List<JobGroup> list = xxlJobGroupMapper.pageList(offset, pagesize, appname, title);
 		int list_count = xxlJobGroupMapper.pageListCount(offset, pagesize, appname, title);
 
 		// package result
-		PageModel<XxlJobGroup> pageModel = new PageModel<>();
+		PageModel<JobGroup> pageModel = new PageModel<>();
 		pageModel.setData(list);
 		pageModel.setTotal(list_count);
 
@@ -68,7 +68,7 @@ public class JobGroupController {
 	@RequestMapping("/insert")
 	@ResponseBody
 	@XxlSso(role = Consts.ADMIN_ROLE)
-	public Response<String> insert(XxlJobGroup xxlJobGroup){
+	public Response<String> insert(JobGroup xxlJobGroup){
 
 		// valid
 		if (StringTool.isBlank(xxlJobGroup.getAppname())) {
@@ -115,7 +115,7 @@ public class JobGroupController {
 	@RequestMapping("/update")
 	@ResponseBody
 	@XxlSso(role = Consts.ADMIN_ROLE)
-	public Response<String> update(XxlJobGroup xxlJobGroup){
+	public Response<String> update(JobGroup xxlJobGroup){
 		// valid
 		if (StringTool.isBlank(xxlJobGroup.getAppname())) {
 			return Response.ofFail((I18nUtil.getString("system_please_input")+"AppName") );
@@ -160,9 +160,9 @@ public class JobGroupController {
 
 	private List<String> findRegistryByAppName(String appnameParam){
 		HashMap<String, List<String>> appAddressMap = new HashMap<>();
-		List<XxlJobRegistry> list = xxlJobRegistryMapper.findAll(Const.DEAD_TIMEOUT, new Date());
+		List<JobRegistry> list = xxlJobRegistryMapper.findAll(Const.DEAD_TIMEOUT, new Date());
 		if (CollectionTool.isNotEmpty(list)) {
-			for (XxlJobRegistry item: list) {
+			for (JobRegistry item: list) {
 				if (!RegistType.EXECUTOR.name().equals(item.getRegistryGroup())) {
 					continue;
 				}
@@ -190,7 +190,7 @@ public class JobGroupController {
 		int id = ids.get(0);
 
         // valid repeat operation
-        XxlJobGroup xxlJobGroup = xxlJobGroupMapper.load(id);
+        JobGroup xxlJobGroup = xxlJobGroupMapper.load(id);
         if (xxlJobGroup == null) {
             return Response.ofSuccess();
         }
@@ -202,7 +202,7 @@ public class JobGroupController {
 		}
 
         // whether only exists one group
-		List<XxlJobGroup> allList = xxlJobGroupMapper.findAll();
+		List<JobGroup> allList = xxlJobGroupMapper.findAll();
 		if (allList.size() == 1) {
 			return Response.ofFail( I18nUtil.getString("jobgroup_del_limit_1") );
 		}
@@ -217,8 +217,8 @@ public class JobGroupController {
 	@RequestMapping("/loadById")
 	@ResponseBody
 	//@XxlSso(role = Consts.ADMIN_ROLE)		// open to default user, support show registry nodes
-	public Response<XxlJobGroup> loadById(@RequestParam("id") int id){
-		XxlJobGroup jobGroup = xxlJobGroupMapper.load(id);
+	public Response<JobGroup> loadById(@RequestParam("id") int id){
+		JobGroup jobGroup = xxlJobGroupMapper.load(id);
 		return jobGroup!=null?Response.ofSuccess(jobGroup):Response.ofFail();
 	}
 

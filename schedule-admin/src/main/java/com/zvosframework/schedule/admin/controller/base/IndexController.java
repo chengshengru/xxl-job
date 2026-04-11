@@ -1,7 +1,7 @@
 package com.zvosframework.schedule.admin.controller.base;
 
 import com.zvosframework.schedule.admin.constant.Consts;
-import com.zvosframework.schedule.admin.model.dto.XxlBootResourceDTO;
+import com.zvosframework.schedule.admin.model.dto.BootResourceDTO;
 import com.zvosframework.schedule.core.handler.annotation.ScheduleService;
 import com.zvosframework.schedule.admin.util.I18nUtil;
 import com.xxl.sso.core.annotation.XxlSso;
@@ -35,7 +35,7 @@ import java.util.stream.Collectors;
 public class IndexController {
 
 	@Resource
-	private XxlJobService xxlJobService;
+	private JobService xxlJobService;
 
 	/**
 	 * index
@@ -45,7 +45,7 @@ public class IndexController {
 	public String index(HttpServletRequest request, Model model) {
 
 		// menu resource
-		List<XxlBootResourceDTO> resourceList = findResourceList(request);
+		List<BootResourceDTO> resourceList = findResourceList(request);
 		model.addAttribute("resourceList", resourceList);
 
 		return "base/index";
@@ -54,17 +54,17 @@ public class IndexController {
 	/**
 	 * fill menu data
 	 */
-	private List<XxlBootResourceDTO> findResourceList(HttpServletRequest request){
+	private List<BootResourceDTO> findResourceList(HttpServletRequest request){
 		// login check
 		Response<LoginInfo> loginInfoResponse = XxlSsoHelper.loginCheckWithAttr(request);
 		// init menu-list
-		List<XxlBootResourceDTO> resourceDTOList = Arrays.asList(
-				new XxlBootResourceDTO(1, 0, I18nUtil.getString("job_dashboard_name"),1, "", "/dashboard", "fa-home", 1, 0, null),
-				new XxlBootResourceDTO(2, 0, I18nUtil.getString("jobinfo_name"),1, "", "/jobinfo", " fa-clock-o", 2, 0, null),
-				new XxlBootResourceDTO(3, 0, I18nUtil.getString("joblog_name"),1, "", "/joblog", " fa-database", 3, 0, null),
-				new XxlBootResourceDTO(4, 0, I18nUtil.getString("jobgroup_name"),1, Consts.ADMIN_ROLE, "/jobgroup", " fa-cloud", 4, 0,null),
-				new XxlBootResourceDTO(5, 0, I18nUtil.getString("user_manage"),1, Consts.ADMIN_ROLE, "/user", "fa-users", 5, 0, null),
-				new XxlBootResourceDTO(9, 0, I18nUtil.getString("admin_help"),1, "", "/help", "fa-book", 6, 0, null)
+		List<BootResourceDTO> resourceDTOList = Arrays.asList(
+				new BootResourceDTO(1, 0, I18nUtil.getString("job_dashboard_name"),1, "", "/dashboard", "fa-home", 1, 0, null),
+				new BootResourceDTO(2, 0, I18nUtil.getString("jobinfo_name"),1, "", "/jobinfo", " fa-clock-o", 2, 0, null),
+				new BootResourceDTO(3, 0, I18nUtil.getString("joblog_name"),1, "", "/joblog", " fa-database", 3, 0, null),
+				new BootResourceDTO(4, 0, I18nUtil.getString("jobgroup_name"),1, Consts.ADMIN_ROLE, "/jobgroup", " fa-cloud", 4, 0,null),
+				new BootResourceDTO(5, 0, I18nUtil.getString("user_manage"),1, Consts.ADMIN_ROLE, "/user", "fa-users", 5, 0, null),
+				new BootResourceDTO(9, 0, I18nUtil.getString("admin_help"),1, "", "/help", "fa-book", 6, 0, null)
 		);
 
 		// filter by role
@@ -73,7 +73,7 @@ public class IndexController {
 					.filter(resourceDTO -> StringTool.isBlank(resourceDTO.getPermission() ))	// normal user had no permission
 					.collect(Collectors.toList());
 		}
-		resourceDTOList.stream().sorted(Comparator.comparing(XxlBootResourceDTO::getOrder)).toList();
+		resourceDTOList.stream().sorted(Comparator.comparing(BootResourceDTO::getOrder)).toList();
 		return resourceDTOList;
 	}
 

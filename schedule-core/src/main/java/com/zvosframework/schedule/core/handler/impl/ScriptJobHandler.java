@@ -26,7 +26,7 @@ public class ScriptJobHandler extends IJobHandler {
         this.glueType = glueType;
 
         // clean old script file
-        File glueSrcPath = new File(XxlJobFileAppender.getGlueSrcPath());
+        File glueSrcPath = new File(JobFileAppender.getGlueSrcPath());
         if (glueSrcPath.exists()) {
             File[] glueSrcFileList = glueSrcPath.listFiles();
             if (glueSrcFileList != null) {
@@ -49,7 +49,7 @@ public class ScriptJobHandler extends IJobHandler {
 
         // valid
         if (!glueType.isScript()) {
-            XxlJobHelper.handleFail("glueType["+ glueType +"] invalid.");
+            JobHelper.handleFail("glueType["+ glueType +"] invalid.");
             return;
         }
 
@@ -57,7 +57,7 @@ public class ScriptJobHandler extends IJobHandler {
         String cmd = glueType.getCmd();
 
         // make script file
-        String scriptFileName = XxlJobFileAppender.getGlueSrcPath()
+        String scriptFileName = JobFileAppender.getGlueSrcPath()
                 .concat(File.separator)
                 .concat(String.valueOf(jobId))
                 .concat("_")
@@ -69,24 +69,24 @@ public class ScriptJobHandler extends IJobHandler {
         }
 
         // log file
-        String logFileName = XxlJobContext.getXxlJobContext().getLogFileName();
+        String logFileName = JobContext.getJobContext().getLogFileName();
 
         // script params：0=param、1=分片序号、2=分片总数
-        String jobParam = XxlJobHelper.getJobParam();
+        String jobParam = JobHelper.getJobParam();
         String[] scriptParams = new String[3];
         scriptParams[0] = jobParam!=null?jobParam:"";
-        scriptParams[1] = String.valueOf(XxlJobContext.getXxlJobContext().getShardIndex());
-        scriptParams[2] = String.valueOf(XxlJobContext.getXxlJobContext().getShardTotal());
+        scriptParams[1] = String.valueOf(JobContext.getJobContext().getShardIndex());
+        scriptParams[2] = String.valueOf(JobContext.getJobContext().getShardTotal());
 
         // invoke
-        XxlJobHelper.log("----------- script file:"+ scriptFileName +" -----------");
+        JobHelper.log("----------- script file:"+ scriptFileName +" -----------");
         int exitValue = ScriptUtil.execToFile(cmd, scriptFileName, logFileName, scriptParams);
 
         if (exitValue == 0) {
-            XxlJobHelper.handleSuccess();
+            JobHelper.handleSuccess();
             return;
         } else {
-            XxlJobHelper.handleFail("script exit value("+exitValue+") is failed");
+            JobHelper.handleFail("script exit value("+exitValue+") is failed");
             return ;
         }
 

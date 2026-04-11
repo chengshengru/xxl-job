@@ -52,7 +52,7 @@ public class TriggerCallbackThread {
     public void start() {
 
         // valid
-        if (XxlJobExecutor.getAdminBizList() == null) {
+        if (JobExecutor.getAdminBizList() == null) {
             logger.warn(">>>>>>>>>>> xxl-job, executor callback config fail, adminAddresses is null.");
             return;
         }
@@ -175,7 +175,7 @@ public class TriggerCallbackThread {
     private void doCallback(List<CallbackRequest> callbackParamList){
         boolean callbackRet = false;
         // callback, will retry if error
-        for (AdminBiz adminBiz: XxlJobExecutor.getAdminBizList()) {
+        for (AdminBiz adminBiz: JobExecutor.getAdminBizList()) {
             try {
                 Response<String> callbackResult = adminBiz.callback(callbackParamList);
                 if (callbackResult!=null && callbackResult.isSuccess()) {
@@ -199,8 +199,8 @@ public class TriggerCallbackThread {
      */
     private void callbackLog(List<CallbackRequest> callbackParamList, String logContent){
         for (CallbackRequest callbackParam: callbackParamList) {
-            String logFileName = XxlJobFileAppender.makeLogFileName(new Date(callbackParam.getLogDateTim()), callbackParam.getLogId());
-            XxlJobContext.setXxlJobContext(new XxlJobContext(
+            String logFileName = JobFileAppender.makeLogFileName(new Date(callbackParam.getLogDateTim()), callbackParam.getLogId());
+            JobContext.setJobContext(new JobContext(
                     -1,
                     null,
                     -1,
@@ -208,7 +208,7 @@ public class TriggerCallbackThread {
                     logFileName,
                     -1,
                     -1));
-            XxlJobHelper.log(logContent);
+            JobHelper.log(logContent);
         }
     }
 
@@ -218,7 +218,7 @@ public class TriggerCallbackThread {
     /**
      * fail-callback file name
      */
-    private static final String failCallbackFileName = XxlJobFileAppender
+    private static final String failCallbackFileName = JobFileAppender
             .getCallbackLogPath()
             .concat(File.separator)
             .concat("xxl-job-callback-{x}")
@@ -257,7 +257,7 @@ public class TriggerCallbackThread {
     private void retryFailCallbackFile() {
 
         // valid
-        File callbackLogPath = new File(XxlJobFileAppender.getCallbackLogPath());
+        File callbackLogPath = new File(JobFileAppender.getCallbackLogPath());
         if (!callbackLogPath.exists()) {
             return;
         }

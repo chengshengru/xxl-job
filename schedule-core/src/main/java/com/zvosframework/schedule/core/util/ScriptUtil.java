@@ -87,14 +87,14 @@ public class ScriptUtil {
                     // 数据流Copy（Input自动关闭，Output不处理）
                     IOTool.copy(finalProcess.getInputStream(), finalFileOutputStream, true, false);
                 } catch (IOException e) {
-                    XxlJobHelper.log(e);
+                    JobHelper.log(e);
                 }
             });
             errorThread = new Thread(() -> {
                 try {
                     IOTool.copy(finalProcess.getErrorStream(), finalFileOutputStream, true, false);
                 } catch (IOException e) {
-                    XxlJobHelper.log(e);
+                    JobHelper.log(e);
                 }
             });
             inputThread.start();
@@ -109,7 +109,7 @@ public class ScriptUtil {
 
             return exitValue;
         } catch (Exception e) {
-            XxlJobHelper.log(e);
+            JobHelper.log(e);
             return -1;
         } finally {
             // 7、close file OutputStream
@@ -117,7 +117,7 @@ public class ScriptUtil {
                 try {
                     fileOutputStream.close();
                 } catch (IOException e) {
-                    XxlJobHelper.log(e);
+                    JobHelper.log(e);
                 }
             }
             // 8、interrupt thread
@@ -181,14 +181,14 @@ public class ScriptUtil {
             int exitValue = exec.execute(commandline);  // exit code: 0=success, 1=error
             return exitValue;
         } catch (Exception e) {
-            XxlJobLogger.log(e);
+            JobLogger.log(e);
             return -1;
         } finally {
             if (fileOutputStream != null) {
                 try {
                     fileOutputStream.close();
                 } catch (IOException e) {
-                    XxlJobLogger.log(e);
+                    JobLogger.log(e);
                 }
 
             }

@@ -38,17 +38,17 @@
 //
 //    @Override
 //    public Response<String> callback(List<HandleCallbackRequest> handleCallbackRequestList) {
-//        return XxlJobRemotingUtil.postBody(addressUrl+"api/callback", accessToken, timeout, handleCallbackRequestList, String.class);
+//        return JobRemotingUtil.postBody(addressUrl+"api/callback", accessToken, timeout, handleCallbackRequestList, String.class);
 //    }
 //
 //    @Override
 //    public Response<String> registry(RegistryRequest registryRequest) {
-//        return XxlJobRemotingUtil.postBody(addressUrl + "api/registry", accessToken, timeout, registryRequest, String.class);
+//        return JobRemotingUtil.postBody(addressUrl + "api/registry", accessToken, timeout, registryRequest, String.class);
 //    }
 //
 //    @Override
 //    public Response<String> registryRemove(RegistryRequest registryRequest) {
-//        return XxlJobRemotingUtil.postBody(addressUrl + "api/registryRemove", accessToken, timeout, registryRequest, String.class);
+//        return JobRemotingUtil.postBody(addressUrl + "api/registryRemove", accessToken, timeout, registryRequest, String.class);
 //    }
 //
 //}

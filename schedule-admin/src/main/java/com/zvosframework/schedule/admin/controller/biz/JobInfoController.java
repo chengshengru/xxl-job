@@ -43,9 +43,9 @@ public class JobInfoController {
 	private static Logger logger = LoggerFactory.getLogger(JobInfoController.class);
 
 	@Resource
-	private XxlJobGroupMapper xxlJobGroupMapper;
+	private JobGroupMapper xxlJobGroupMapper;
 	@Resource
-	private XxlJobService xxlJobService;
+	private JobService xxlJobService;
 	
 	@RequestMapping
 	public String index(HttpServletRequest request, Model model, @RequestParam(value = "jobGroup", required = false, defaultValue = "-1") int jobGroup) {
@@ -58,17 +58,17 @@ public class JobInfoController {
 		model.addAttribute("MisfireStrategyEnum", MisfireStrategyEnum.values());	    			// 调度过期策略
 
 		// 执行器列表
-		List<XxlJobGroup> jobGroupListTotal =  xxlJobGroupMapper.findAll();
+		List<JobGroup> jobGroupListTotal =  xxlJobGroupMapper.findAll();
 
 		// filter group
-		List<XxlJobGroup> jobGroupList = JobGroupPermissionUtil.filterJobGroupByPermission(request, jobGroupListTotal);
+		List<JobGroup> jobGroupList = JobGroupPermissionUtil.filterJobGroupByPermission(request, jobGroupListTotal);
 		if (CollectionTool.isEmpty(jobGroupList)) {
-			throw new XxlJobException(I18nUtil.getString("jobgroup_empty"));
+			throw new JobException(I18nUtil.getString("jobgroup_empty"));
 		}
 
 		// parse jobGroup
 		if (!(CollectionTool.isNotEmpty(jobGroupList)
-				&& jobGroupList.stream().map(XxlJobGroup::getId).toList().contains(jobGroup))) {
+				&& jobGroupList.stream().map(JobGroup::getId).toList().contains(jobGroup))) {
 			jobGroup = -1;
 		}
 
@@ -80,7 +80,7 @@ public class JobInfoController {
 
 	@RequestMapping("/pageList")
 	@ResponseBody
-	public Response<PageModel<XxlJobInfo>> pageList(HttpServletRequest request,
+	public Response<PageModel<JobInfo>> pageList(HttpServletRequest request,
 													@RequestParam(required = false, defaultValue = "0") int offset,
 													@RequestParam(required = false, defaultValue = "10") int pagesize,
 													@RequestParam int jobGroup,
@@ -98,7 +98,7 @@ public class JobInfoController {
 	
 	@RequestMapping("/insert")
 	@ResponseBody
-	public Response<String> add(HttpServletRequest request, XxlJobInfo jobInfo) {
+	public Response<String> add(HttpServletRequest request, JobInfo jobInfo) {
 		// valid permission
 		LoginInfo loginInfo = JobGroupPermissionUtil.validJobGroupPermission(request, jobInfo.getJobGroup());
 
@@ -108,7 +108,7 @@ public class JobInfoController {
 
 	@RequestMapping("/update")
 	@ResponseBody
-	public Response<String> update(HttpServletRequest request, XxlJobInfo jobInfo) {
+	public Response<String> update(HttpServletRequest request, JobInfo jobInfo) {
 		// valid permission
 		LoginInfo loginInfo = JobGroupPermissionUtil.validJobGroupPermission(request, jobInfo.getJobGroup());
 
@@ -179,9 +179,9 @@ public class JobInfoController {
 		}
 
 		// param
-		XxlJobInfo paramXxlJobInfo = new XxlJobInfo();
-		paramXxlJobInfo.setScheduleType(scheduleType);
-		paramXxlJobInfo.setScheduleConf(scheduleConf);
+		JobInfo paramJobInfo = new JobInfo();
+		paramJobInfo.setScheduleType(scheduleType);
+		paramJobInfo.setScheduleConf(scheduleConf);
 
 		// generate
 		List<String> result = new ArrayList<>();
@@ -190,8 +190,8 @@ public class JobInfoController {
 			for (int i = 0; i < 5; i++) {
 
 				// generate next trigger time
-				ScheduleTypeEnum scheduleTypeEnum = ScheduleTypeEnum.match(paramXxlJobInfo.getScheduleType(), ScheduleTypeEnum.NONE);
-				lastTime = scheduleTypeEnum.getScheduleType().generateNextTriggerTime(paramXxlJobInfo, lastTime);
+				ScheduleTypeEnum scheduleTypeEnum = ScheduleTypeEnum.match(paramJobInfo.getScheduleType(), ScheduleTypeEnum.NONE);
+				lastTime = scheduleTypeEnum.getScheduleType().generateNextTriggerTime(paramJobInfo, lastTime);
 
 				// collect data
 				if (lastTime != null) {

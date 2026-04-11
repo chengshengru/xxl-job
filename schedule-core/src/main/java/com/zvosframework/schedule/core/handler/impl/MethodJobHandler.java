@@ -27,7 +27,7 @@ public class MethodJobHandler extends IJobHandler {
         Class<?>[] paramTypes = method.getParameterTypes();
         if (paramTypes.length > 0) {
             // get job param
-            String jobParam = com.zvosframework.schedule.core.context.XxlJobContext.getXxlJobContext().getJobParam();
+            String jobParam = com.zvosframework.schedule.core.context.JobContext.getJobContext().getJobParam();
             Object[] args = new Object[paramTypes.length];
             
             // convert param to method arguments

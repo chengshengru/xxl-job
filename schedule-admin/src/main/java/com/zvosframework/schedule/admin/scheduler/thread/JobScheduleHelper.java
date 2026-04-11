@@ -60,7 +60,7 @@ public class JobScheduleHelper {
                 logger.info(">>>>>>>>> init xxl-job admin scheduler success.");
 
                 // pre-read count: treadpool-size * 10 (trigger-qps: 1000ms / 100ms each trigger cost)
-                int preReadCount = (XxlJobAdminBootstrap.getInstance().getTriggerPoolFastMax() + XxlJobAdminBootstrap.getInstance().getTriggerPoolSlowMax()) * 10;
+                int preReadCount = (JobAdminBootstrap.getInstance().getTriggerPoolFastMax() + JobAdminBootstrap.getInstance().getTriggerPoolSlowMax()) * 10;
 
                 // do schedule
                 while (!scheduleThreadToStop) {
@@ -72,17 +72,17 @@ public class JobScheduleHelper {
                     // transaction start
                     TransactionStatus transactionStatus = null;
                     try {
-                        transactionStatus = XxlJobAdminBootstrap.getInstance().getTransactionManager().getTransaction(new DefaultTransactionDefinition());
+                        transactionStatus = JobAdminBootstrap.getInstance().getTransactionManager().getTransaction(new DefaultTransactionDefinition());
                         // 1、job lock
-                        String lockedRecord = XxlJobAdminBootstrap.getInstance().getXxlJobLockMapper().scheduleLock();
+                        String lockedRecord = JobAdminBootstrap.getInstance().getJobLockMapper().scheduleLock();
                         long nowTime = System.currentTimeMillis();
 
                         // scan and process job
-                        List<XxlJobInfo> scheduleList = XxlJobAdminBootstrap.getInstance().getXxlJobInfoMapper().scheduleJobQuery(nowTime + PRE_READ_MS, preReadCount);
+                        List<JobInfo> scheduleList = JobAdminBootstrap.getInstance().getJobInfoMapper().scheduleJobQuery(nowTime + PRE_READ_MS, preReadCount);
                         if (CollectionTool.isNotEmpty(scheduleList)) {
 
                             // 2、push time-ring
-                            for (XxlJobInfo jobInfo: scheduleList) {
+                            for (JobInfo jobInfo: scheduleList) {
 
                                 // time-ring jump
                                 if (nowTime > jobInfo.getTriggerNextTime() + PRE_READ_MS) {
@@ -99,7 +99,7 @@ public class JobScheduleHelper {
                                     // 2.2、trigger-expire < 5s：direct-trigger && make next-trigger-time
 
                                     // 1、trigger direct
-                                    XxlJobAdminBootstrap.getInstance().getJobTriggerPoolHelper().trigger(jobInfo.getId(), TriggerTypeEnum.CRON, -1, null, null, null);
+                                    JobAdminBootstrap.getInstance().getJobTriggerPoolHelper().trigger(jobInfo.getId(), TriggerTypeEnum.CRON, -1, null, null, null);
                                     logger.debug(">>>>>>>>>>> xxl-job, schedule expire, direct trigger : jobId = " + jobInfo.getId() );
 
                                     // 2、fresh next
@@ -138,13 +138,13 @@ public class JobScheduleHelper {
                             }
 
                             // 3、update trigger info
-                            /*for (XxlJobInfo jobInfo: scheduleList) {
-                                XxlJobAdminBootstrap.getInstance().getXxlJobInfoMapper().scheduleUpdate(jobInfo);
+                            /*for (JobInfo jobInfo: scheduleList) {
+                                JobAdminBootstrap.getInstance().getJobInfoMapper().scheduleUpdate(jobInfo);
                             }*/
-                            int batchSize = XxlJobAdminBootstrap.getInstance().getScheduleBatchSize();
-                            List<List<XxlJobInfo>> scheduleListBatches = CollectionTool.split(scheduleList, batchSize);
-                            for (List<XxlJobInfo> scheduleListBatch : scheduleListBatches) {
-                                int totalAffected = XxlJobAdminBootstrap.getInstance().getXxlJobInfoMapper().scheduleBatchUpdate(scheduleListBatch);
+                            int batchSize = JobAdminBootstrap.getInstance().getScheduleBatchSize();
+                            List<List<JobInfo>> scheduleListBatches = CollectionTool.split(scheduleList, batchSize);
+                            for (List<JobInfo> scheduleListBatch : scheduleListBatches) {
+                                int totalAffected = JobAdminBootstrap.getInstance().getJobInfoMapper().scheduleBatchUpdate(scheduleListBatch);
                                 logger.debug(">>>>>>>>>>> xxl-job, JobScheduleHelper scheduleBatchUpdate records:" + totalAffected);
                             }
 
@@ -160,7 +160,7 @@ public class JobScheduleHelper {
                         // transaction commit
                         try {
                             if (transactionStatus != null) {
-                                XxlJobAdminBootstrap.getInstance().getTransactionManager().commit(transactionStatus);   // avlid schedule repeat
+                                JobAdminBootstrap.getInstance().getTransactionManager().commit(transactionStatus);   // avlid schedule repeat
                             }
                         } catch (Throwable e) {
                             logger.error(">>>>>>>>>>> xxl-job, JobScheduleHelper#scheduleThread transaction commit error:{}", e.getMessage(), e);
@@ -234,7 +234,7 @@ public class JobScheduleHelper {
                             // do trigger
                             for (int jobId: ringItemData) {
                                 // do trigger
-                                XxlJobAdminBootstrap.getInstance().getJobTriggerPoolHelper().trigger(jobId, TriggerTypeEnum.CRON, -1, null, null, null);
+                                JobAdminBootstrap.getInstance().getJobTriggerPoolHelper().trigger(jobId, TriggerTypeEnum.CRON, -1, null, null, null);
                             }
                             // clear
                             ringItemData.clear();
@@ -259,7 +259,7 @@ public class JobScheduleHelper {
      * @param jobInfo   job info
      * @param fromTime  from time
      */
-    private void refreshNextTriggerTime(XxlJobInfo jobInfo, Date fromTime) {
+    private void refreshNextTriggerTime(JobInfo jobInfo, Date fromTime) {
         try {
             // generate next trigger time
             ScheduleTypeEnum scheduleTypeEnum = ScheduleTypeEnum.match(jobInfo.getScheduleType(), ScheduleTypeEnum.NONE);

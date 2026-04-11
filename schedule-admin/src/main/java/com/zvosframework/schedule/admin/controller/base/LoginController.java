@@ -29,7 +29,7 @@ import org.springframework.web.servlet.view.RedirectView;
 public class LoginController {
 
 	@Resource
-	private XxlJobUserMapper xxlJobUserMapper;
+	private JobUserMapper xxlJobUserMapper;
 
 	@RequestMapping("/login")
 	@XxlSso(login = false)
@@ -57,7 +57,7 @@ public class LoginController {
 		}
 
 		// valid user、status
-		XxlJobUser xxlJobUser = xxlJobUserMapper.loadByUserName(userName);
+		JobUser xxlJobUser = xxlJobUserMapper.loadByUserName(userName);
 		if (xxlJobUser == null) {
 			return Response.ofFail( I18nUtil.getString("login_param_invalid") );
 		}
@@ -109,7 +109,7 @@ public class LoginController {
 
 		// valid old pwd
 		Response<LoginInfo> loginInfoResponse = XxlSsoHelper.loginCheckWithAttr(request);
-		XxlJobUser existUser = xxlJobUserMapper.loadByUserName(loginInfoResponse.getData().getUserName());
+		JobUser existUser = xxlJobUserMapper.loadByUserName(loginInfoResponse.getData().getUserName());
 		if (!oldPasswordHash.equals(existUser.getPassword())) {
 			return Response.ofFail(I18nUtil.getString("change_pwd_field_oldpwd") + I18nUtil.getString("system_invalid"));
 		}

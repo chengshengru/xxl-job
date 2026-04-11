@@ -34,16 +34,16 @@ import java.util.Map;
 public class JobUserController {
 
     @Resource
-    private XxlJobUserMapper xxlJobUserMapper;
+    private JobUserMapper xxlJobUserMapper;
     @Resource
-    private XxlJobGroupMapper xxlJobGroupMapper;
+    private JobGroupMapper xxlJobGroupMapper;
 
     @RequestMapping
     @XxlSso(role = Consts.ADMIN_ROLE)
     public String index(Model model) {
 
         // 执行器列表
-        List<XxlJobGroup> groupList = xxlJobGroupMapper.findAll();
+        List<JobGroup> groupList = xxlJobGroupMapper.findAll();
         model.addAttribute("groupList", groupList);
 
         return "biz/user.list";
@@ -52,24 +52,24 @@ public class JobUserController {
     @RequestMapping("/pageList")
     @ResponseBody
     @XxlSso(role = Consts.ADMIN_ROLE)
-    public Response<PageModel<XxlJobUser>> pageList(@RequestParam(required = false, defaultValue = "0") int offset,
+    public Response<PageModel<JobUser>> pageList(@RequestParam(required = false, defaultValue = "0") int offset,
                                                     @RequestParam(required = false, defaultValue = "10") int pagesize,
                                                     @RequestParam String username,
                                                     @RequestParam int role) {
 
         // page list
-        List<XxlJobUser> list = xxlJobUserMapper.pageList(offset, pagesize, username, role);
+        List<JobUser> list = xxlJobUserMapper.pageList(offset, pagesize, username, role);
         int list_count = xxlJobUserMapper.pageListCount(offset, pagesize, username, role);
 
         // filter
         if (list!=null && !list.isEmpty()) {
-            for (XxlJobUser item: list) {
+            for (JobUser item: list) {
                 item.setPassword(null);
             }
         }
 
         // package result
-        PageModel<XxlJobUser> pageModel = new PageModel<>();
+        PageModel<JobUser> pageModel = new PageModel<>();
         pageModel.setData(list);
         pageModel.setTotal(list_count);
 
@@ -79,7 +79,7 @@ public class JobUserController {
     @RequestMapping("/insert")
     @ResponseBody
     @XxlSso(role = Consts.ADMIN_ROLE)
-    public Response<String> insert(XxlJobUser xxlJobUser) {
+    public Response<String> insert(JobUser xxlJobUser) {
 
         // valid username
         if (StringTool.isBlank(xxlJobUser.getUsername())) {
@@ -102,7 +102,7 @@ public class JobUserController {
         xxlJobUser.setPassword(passwordHash);
 
         // check repeat
-        XxlJobUser existUser = xxlJobUserMapper.loadByUserName(xxlJobUser.getUsername());
+        JobUser existUser = xxlJobUserMapper.loadByUserName(xxlJobUser.getUsername());
         if (existUser != null) {
             return Response.ofFail( I18nUtil.getString("user_username_repeat") );
         }
@@ -115,7 +115,7 @@ public class JobUserController {
     @RequestMapping("/update")
     @ResponseBody
     @XxlSso(role = Consts.ADMIN_ROLE)
-    public Response<String> update(HttpServletRequest request, XxlJobUser xxlJobUser) {
+    public Response<String> update(HttpServletRequest request, JobUser xxlJobUser) {
 
         // avoid opt login seft
         Response<LoginInfo> loginInfoResponse = XxlSsoHelper.loginCheckWithAttr(request);
@@ -185,7 +185,7 @@ public class JobUserController {
 
         // valid old pwd
         Response<LoginInfo> loginInfoResponse = XxlSsoHelper.loginCheckWithAttr(request);
-        XxlJobUser existUser = xxlJobUserMapper.loadByUserName(loginInfoResponse.getData().getUserName());
+        JobUser existUser = xxlJobUserMapper.loadByUserName(loginInfoResponse.getData().getUserName());
         if (!oldPasswordHash.equals(existUser.getPassword())) {
             return Response.ofFail(I18nUtil.getString("change_pwd_field_oldpwd") + I18nUtil.getString("system_invalid"));
         }

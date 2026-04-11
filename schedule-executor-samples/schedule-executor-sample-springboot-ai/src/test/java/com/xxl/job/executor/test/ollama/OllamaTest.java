@@ -23,7 +23,7 @@ public class OllamaTest {
 
     // ignore
     @MockitoBean
-    private XxlJobSpringExecutor xxlJobSpringExecutor;
+    private JobSpringExecutor xxlJobSpringExecutor;
 
 
     @Resource

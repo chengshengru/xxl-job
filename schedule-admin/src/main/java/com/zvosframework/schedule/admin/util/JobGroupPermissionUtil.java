@@ -45,7 +45,7 @@ public class JobGroupPermissionUtil {
     /**
      * filter jobGroupList by permission
      */
-    public static List<XxlJobGroup> filterJobGroupByPermission(HttpServletRequest request, List<XxlJobGroup> jobGroupListTotal){
+    public static List<JobGroup> filterJobGroupByPermission(HttpServletRequest request, List<JobGroup> jobGroupListTotal){
         Response<LoginInfo>  loginInfoResponse = XxlSsoHelper.loginCheckWithAttr(request);
 
         if (XxlSsoHelper.hasRole(loginInfoResponse.getData(), Consts.ADMIN_ROLE).isSuccess()) {
