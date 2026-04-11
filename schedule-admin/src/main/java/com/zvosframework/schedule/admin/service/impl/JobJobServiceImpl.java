@@ -12,6 +12,7 @@ import com.zvosframework.schedule.admin.scheduler.route.ExecutorRouteStrategyEnu
 import com.zvosframework.schedule.admin.scheduler.thread.JobScheduleHelper;
 import com.zvosframework.schedule.admin.scheduler.trigger.TriggerTypeEnum;
 import com.zvosframework.schedule.admin.scheduler.type.ScheduleTypeEnum;
+import com.zvosframework.schedule.admin.scheduler.type.strategy.TimeRangeConfig;
 import com.zvosframework.schedule.core.handler.annotation.ScheduleService;
 import com.zvosframework.schedule.admin.util.I18nUtil;
 import com.zvosframework.schedule.admin.util.JobGroupPermissionUtil;
@@ -96,6 +97,27 @@ public class JobServiceImpl implements JobService {
 			try {
 				int fixSecond = Integer.parseInt(jobInfo.getScheduleConf());
 				if (fixSecond < 1) {
+					return Response.ofFail ( (I18nUtil.getString("schedule_type")+I18nUtil.getString("system_invalid")) );
+				}
+			} catch (Exception e) {
+				return Response.ofFail ( (I18nUtil.getString("schedule_type")+I18nUtil.getString("system_invalid")) );
+			}
+		} else if (scheduleTypeEnum == ScheduleTypeEnum.TIME_RANGE) {
+			if (jobInfo.getScheduleConf() == null) {
+				return Response.ofFail ( (I18nUtil.getString("schedule_type")) );
+			}
+			try {
+				TimeRangeConfig config = GsonTool.fromJson(jobInfo.getScheduleConf(), TimeRangeConfig.class);
+				if (config.getStartTime() == null || config.getEndTime() == null || 
+				    config.getIntervalUnit() == null || config.getInterval() < 1) {
+					return Response.ofFail ( (I18nUtil.getString("schedule_type")+I18nUtil.getString("system_invalid")) );
+				}
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+				sdf.parse(config.getStartTime());
+				sdf.parse(config.getEndTime());
+				if (!("second".equals(config.getIntervalUnit()) || 
+				      "minute".equals(config.getIntervalUnit()) || 
+				      "hour".equals(config.getIntervalUnit()))) {
 					return Response.ofFail ( (I18nUtil.getString("schedule_type")+I18nUtil.getString("system_invalid")) );
 				}
 			} catch (Exception e) {
@@ -202,6 +224,27 @@ public class JobServiceImpl implements JobService {
 			try {
 				int fixSecond = Integer.parseInt(jobInfo.getScheduleConf());
 				if (fixSecond < 1) {
+					return Response.ofFail ( (I18nUtil.getString("schedule_type")+I18nUtil.getString("system_invalid")) );
+				}
+			} catch (Exception e) {
+				return Response.ofFail ( (I18nUtil.getString("schedule_type")+I18nUtil.getString("system_invalid")) );
+			}
+		} else if (scheduleTypeEnum == ScheduleTypeEnum.TIME_RANGE) {
+			if (jobInfo.getScheduleConf() == null) {
+				return Response.ofFail ( (I18nUtil.getString("schedule_type")) );
+			}
+			try {
+				TimeRangeConfig config = GsonTool.fromJson(jobInfo.getScheduleConf(), TimeRangeConfig.class);
+				if (config.getStartTime() == null || config.getEndTime() == null || 
+				    config.getIntervalUnit() == null || config.getInterval() < 1) {
+					return Response.ofFail ( (I18nUtil.getString("schedule_type")+I18nUtil.getString("system_invalid")) );
+				}
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+				sdf.parse(config.getStartTime());
+				sdf.parse(config.getEndTime());
+				if (!("second".equals(config.getIntervalUnit()) || 
+				      "minute".equals(config.getIntervalUnit()) || 
+				      "hour".equals(config.getIntervalUnit()))) {
 					return Response.ofFail ( (I18nUtil.getString("schedule_type")+I18nUtil.getString("system_invalid")) );
 				}
 			} catch (Exception e) {

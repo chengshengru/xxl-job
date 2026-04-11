@@ -3,6 +3,7 @@ package com.zvosframework.schedule.admin.scheduler.type;
 import com.zvosframework.schedule.admin.scheduler.type.strategy.CronScheduleType;
 import com.zvosframework.schedule.admin.scheduler.type.strategy.FixRateScheduleType;
 import com.zvosframework.schedule.admin.scheduler.type.strategy.NoneScheduleType;
+import com.zvosframework.schedule.admin.scheduler.type.strategy.TimeRangeScheduleType;
 import com.zvosframework.schedule.admin.util.I18nUtil;
 
 /**
@@ -21,6 +22,11 @@ public enum ScheduleTypeEnum {
      * schedule by fixed rate (in seconds)
      */
     FIX_RATE(I18nUtil.getString("schedule_type_fix_rate"), new FixRateScheduleType()),
+
+    /**
+     * schedule by time range
+     */
+    TIME_RANGE(I18nUtil.getString("schedule_type_time_range"), new TimeRangeScheduleType()),
 
     /**
      * schedule by fix delay (in seconds)， after the last time

@@ -154,6 +154,24 @@
 									<label for="lastname" class="col-sm-2 control-label">${I18n.schedule_type_fix_delay}<font color="red">*</font></label>
 									<div class="col-sm-4"><input type="text" class="form-control" name="schedule_conf_FIX_DELAY" placeholder="${I18n.system_please_input} （ Second ）" maxlength="10" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" ></div>
 								</div>
+								<div class="schedule_conf schedule_conf_TIME_RANGE" style="display: none" >
+									<label for="lastname" class="col-sm-2 control-label">开始时间<font color="red">*</font></label>
+									<div class="col-sm-4"><input type="text" class="form-control" name="schedule_conf_TIME_RANGE_start" placeholder="yyyy-MM-dd HH:mm:ss" maxlength="19" ></div>
+									<label for="lastname" class="col-sm-2 control-label">结束时间<font color="red">*</font></label>
+									<div class="col-sm-4"><input type="text" class="form-control" name="schedule_conf_TIME_RANGE_end" placeholder="yyyy-MM-dd HH:mm:ss" maxlength="19" ></div>
+								</div>
+								<div class="schedule_conf schedule_conf_TIME_RANGE" style="display: none; margin-top: 10px;" >
+									<label for="lastname" class="col-sm-2 control-label">间隔值<font color="red">*</font></label>
+									<div class="col-sm-4"><input type="text" class="form-control" name="schedule_conf_TIME_RANGE_interval" placeholder="间隔值" maxlength="10" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" ></div>
+									<label for="lastname" class="col-sm-2 control-label">间隔单位<font color="red">*</font></label>
+									<div class="col-sm-4">
+										<select class="form-control" name="schedule_conf_TIME_RANGE_unit" >
+											<option value="second">秒</option>
+											<option value="minute">分钟</option>
+											<option value="hour">小时</option>
+										</select>
+									</div>
+								</div>
 							</div>
 
 							<br>
@@ -413,6 +431,24 @@ exit 0
 								<div class="schedule_conf schedule_conf_FIX_DELAY" style="display: none" >
 									<label for="lastname" class="col-sm-2 control-label">${I18n.schedule_type_fix_delay}<font color="red">*</font></label>
 									<div class="col-sm-4"><input type="text" class="form-control" name="schedule_conf_FIX_DELAY" placeholder="${I18n.system_please_input} （ Second ）" maxlength="10" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" ></div>
+								</div>
+								<div class="schedule_conf schedule_conf_TIME_RANGE" style="display: none" >
+									<label for="lastname" class="col-sm-2 control-label">开始时间<font color="red">*</font></label>
+									<div class="col-sm-4"><input type="text" class="form-control" name="schedule_conf_TIME_RANGE_start" placeholder="yyyy-MM-dd HH:mm:ss" maxlength="19" ></div>
+									<label for="lastname" class="col-sm-2 control-label">结束时间<font color="red">*</font></label>
+									<div class="col-sm-4"><input type="text" class="form-control" name="schedule_conf_TIME_RANGE_end" placeholder="yyyy-MM-dd HH:mm:ss" maxlength="19" ></div>
+								</div>
+								<div class="schedule_conf schedule_conf_TIME_RANGE" style="display: none; margin-top: 10px;" >
+									<label for="lastname" class="col-sm-2 control-label">间隔值<font color="red">*</font></label>
+									<div class="col-sm-4"><input type="text" class="form-control" name="schedule_conf_TIME_RANGE_interval" placeholder="间隔值" maxlength="10" onkeyup="this.value=this.value.replace(/\D/g,'')" onafterpaste="this.value=this.value.replace(/\D/g,'')" ></div>
+									<label for="lastname" class="col-sm-2 control-label">间隔单位<font color="red">*</font></label>
+									<div class="col-sm-4">
+										<select class="form-control" name="schedule_conf_TIME_RANGE_unit" >
+											<option value="second">秒</option>
+											<option value="minute">分钟</option>
+											<option value="hour">小时</option>
+										</select>
+									</div>
 								</div>
 							</div>
 
@@ -1097,6 +1133,17 @@ exit 0
 					scheduleConf = $("#addModal .form input[name='schedule_conf_FIX_RATE']").val();
 				} else if (scheduleType == 'FIX_DELAY') {
 					scheduleConf = $("#addModal .form input[name='schedule_conf_FIX_DELAY']").val();
+				} else if (scheduleType == 'TIME_RANGE') {
+					var startTime = $("#addModal .form input[name='schedule_conf_TIME_RANGE_start']").val();
+					var endTime = $("#addModal .form input[name='schedule_conf_TIME_RANGE_end']").val();
+					var interval = $("#addModal .form input[name='schedule_conf_TIME_RANGE_interval']").val();
+					var intervalUnit = $("#addModal .form select[name='schedule_conf_TIME_RANGE_unit']").val();
+					scheduleConf = JSON.stringify({
+						startTime: startTime,
+						endTime: endTime,
+						interval: parseInt(interval),
+						intervalUnit: intervalUnit
+					});
 				}
 				$("#addModal .form input[name='scheduleConf']").val( scheduleConf );
 
@@ -1190,6 +1237,16 @@ exit 0
 					$("#updateModal .form input[name='schedule_conf_FIX_RATE']").val( row.scheduleConf );
 				} else if (row.scheduleType == 'FIX_DELAY') {
 					$("#updateModal .form input[name='schedule_conf_FIX_DELAY']").val( row.scheduleConf );
+				} else if (row.scheduleType == 'TIME_RANGE') {
+					try {
+						var config = JSON.parse(row.scheduleConf);
+						$("#updateModal .form input[name='schedule_conf_TIME_RANGE_start']").val(config.startTime);
+						$("#updateModal .form input[name='schedule_conf_TIME_RANGE_end']").val(config.endTime);
+						$("#updateModal .form input[name='schedule_conf_TIME_RANGE_interval']").val(config.interval);
+						$("#updateModal .form select[name='schedule_conf_TIME_RANGE_unit']").val(config.intervalUnit);
+					} catch(e) {
+						console.error("Failed to parse time range config", e);
+					}
 				}
 
 				// 》init scheduleType
@@ -1240,6 +1297,17 @@ exit 0
 					scheduleConf = $("#updateModal .form input[name='schedule_conf_FIX_RATE']").val();
 				} else if (scheduleType == 'FIX_DELAY') {
 					scheduleConf = $("#updateModal .form input[name='schedule_conf_FIX_DELAY']").val();
+				} else if (scheduleType == 'TIME_RANGE') {
+					var startTime = $("#updateModal .form input[name='schedule_conf_TIME_RANGE_start']").val();
+					var endTime = $("#updateModal .form input[name='schedule_conf_TIME_RANGE_end']").val();
+					var interval = $("#updateModal .form input[name='schedule_conf_TIME_RANGE_interval']").val();
+					var intervalUnit = $("#updateModal .form select[name='schedule_conf_TIME_RANGE_unit']").val();
+					scheduleConf = JSON.stringify({
+						startTime: startTime,
+						endTime: endTime,
+						interval: parseInt(interval),
+						intervalUnit: intervalUnit
+					});
 				}
 				$("#updateModal .form input[name='scheduleConf']").val( scheduleConf );
 
@@ -1281,6 +1349,16 @@ exit 0
 				$("#addModal .form input[name='schedule_conf_FIX_RATE']").val( row.scheduleConf );
 			} else if (row.scheduleType == 'FIX_DELAY') {
 				$("#addModal .form input[name='schedule_conf_FIX_DELAY']").val( row.scheduleConf );
+			} else if (row.scheduleType == 'TIME_RANGE') {
+				try {
+					var config = JSON.parse(row.scheduleConf);
+					$("#addModal .form input[name='schedule_conf_TIME_RANGE_start']").val(config.startTime);
+					$("#addModal .form input[name='schedule_conf_TIME_RANGE_end']").val(config.endTime);
+					$("#addModal .form input[name='schedule_conf_TIME_RANGE_interval']").val(config.interval);
+					$("#addModal .form select[name='schedule_conf_TIME_RANGE_unit']").val(config.intervalUnit);
+				} catch(e) {
+					console.error("Failed to parse time range config", e);
+				}
 			}
 
 			// 》init scheduleType
