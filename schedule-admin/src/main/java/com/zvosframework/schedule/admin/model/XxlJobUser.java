@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
-@TableName("xxl_job_user")
+@TableName("schedule_job_user")
 public class XxlJobUser {
 	
 	@TableId(type = IdType.AUTO)

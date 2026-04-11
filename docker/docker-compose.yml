@@ -4,17 +4,17 @@ version: '3.8'
 services:
   mysql:
     image: mysql:8.4
-    container_name: xxl-job-mysql
+    container_name: schedule-mysql
     environment:
       # 1、数据库密码设置，需要与Admin中配置一致：
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       # 2、数据库实例名称，需要与Admin中配置一致；
-      MYSQL_DATABASE: xxl_job
+      MYSQL_DATABASE: schedule
     ports:
       - "3306:3306"
     volumes:
       # 说明：仅数据库首次初始化时执行；
-      - ../doc/db/tables_xxl_job.sql:/docker-entrypoint-initdb.d/tables_xxl_job.sql:ro
+      - ../doc/db/tables_schedule.sql:/docker-entrypoint-initdb.d/tables_schedule.sql:ro
       # 3、数据库持久化目录位置，建议自定义：
       - ${MYSQL_PATH}/conf:/etc/mysql/conf.d
       - ${MYSQL_PATH}/logs:/var/log/mysql
@@ -27,49 +27,49 @@ services:
       timeout: 20s
       retries: 10
     networks:
-      - xxl-job-network
+      - schedule-network
 
-  xxl-job-admin:
+  schedule-admin:
     # 4、本地Build设置，如果期望使用推动DockerHub的镜像，可以注释当前启用的image、build配置，并启用如下设置版本的image配置；
-    #image: xuxueli/xxl-job-admin:{version}
-    image: xuxueli/xxl-job-admin:local
+    #image: xuxueli/schedule-admin:{version}
+    image: xuxueli/schedule-admin:local
     build:
-      context: ../xxl-job-admin
+      context: ../schedule-admin
       dockerfile: Dockerfile
-    container_name: xxl-job-admin
+    container_name: schedule-admin
     environment:
       # 5、数据库密码设置，需要与上文Mysql中保持一致：
       PARAMS: >-
-        --spring.datasource.url=jdbc:mysql://mysql:3306/xxl_job?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&serverTimezone=Asia/Shanghai
+        --spring.datasource.url=jdbc:mysql://mysql:3306/schedule?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&serverTimezone=Asia/Shanghai
         --spring.datasource.username=root 
         --spring.datasource.password=${MYSQL_ROOT_PASSWORD}
-        --server.port=${XXL_JOB_ADMIN_PORT}
-        --server.servlet.context-path=${XXL_JOB_ADMIN_CONTEXT_PATH}
+        --server.port=${SCHEDULE_ADMIN_PORT}
+        --server.servlet.context-path=${SCHEDULE_ADMIN_CONTEXT_PATH}
     ports:
-      - "${XXL_JOB_ADMIN_PORT}:${XXL_JOB_ADMIN_PORT}"
+      - "${SCHEDULE_ADMIN_PORT}:${SCHEDULE_ADMIN_PORT}"
     depends_on:
       mysql:
         condition: service_healthy
     networks:
-      - xxl-job-network
+      - schedule-network
 
-  xxl-job-executor-sample-springboot:
-    image: xuxueli/xxl-job-executor-sample-springboot:local
+  schedule-executor-sample-springboot:
+    image: xuxueli/schedule-executor-sample-springboot:local
     build:
-      context: ./xxl-job-executor-samples/xxl-job-executor-sample-springboot
+      context: ./schedule-executor-samples/schedule-executor-sample-springboot
       dockerfile: Dockerfile
-    container_name: xxl-job-executor-sample-springboot
+    container_name: schedule-executor-sample-springboot
     environment:
       PARAMS: >-
-        --xxl.job.admin.addresses=http://xxl-job-admin:${XXL_JOB_ADMIN_PORT}${XXL_JOB_ADMIN_CONTEXT_PATH:-/}
+        --schedule.admin.addresses=http://schedule-admin:${SCHEDULE_ADMIN_PORT}${SCHEDULE_ADMIN_CONTEXT_PATH:-/}
     ports:
       - "9999:9999"
     depends_on:
-      xxl-job-admin:
+      schedule-admin:
         condition: service_started
     networks:
-      - xxl-job-network
+      - schedule-network
 
 networks:
-  xxl-job-network:
+  schedule-network:
     driver: bridge

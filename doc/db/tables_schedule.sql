@@ -1,15 +1,15 @@
 #
-# XXL-JOB
+# Schedule
 # Copyright (c) 2015-present, xuxueli.
 
-CREATE database if NOT EXISTS `xxl_job` default character set utf8mb4 collate utf8mb4_unicode_ci;
-use `xxl_job`;
+CREATE database if NOT EXISTS `schedule` default character set utf8mb4 collate utf8mb4_unicode_ci;
+use `schedule`;
 
 SET NAMES utf8mb4;
 
 ## —————————————————————— job group and registry ——————————————————
 
-CREATE TABLE `xxl_job_group`
+CREATE TABLE `schedule_job_group`
 (
     `id`           int(11)     NOT NULL AUTO_INCREMENT,
     `app_name`     varchar(64) NOT NULL COMMENT '执行器AppName',
@@ -21,7 +21,7 @@ CREATE TABLE `xxl_job_group`
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4;
 
-CREATE TABLE `xxl_job_registry`
+CREATE TABLE `schedule_job_registry`
 (
     `id`                bigint(20)   NOT NULL AUTO_INCREMENT,
     `registry_group`    varchar(50)  NOT NULL,
@@ -35,7 +35,7 @@ CREATE TABLE `xxl_job_registry`
 
 ## —————————————————————— job info ——————————————————
 
-CREATE TABLE `xxl_job_info`
+CREATE TABLE `schedule_job_info`
 (
     `id`                        int(11)      NOT NULL AUTO_INCREMENT,
     `job_group`                 int(11)      NOT NULL COMMENT '执行器主键ID',
@@ -65,7 +65,7 @@ CREATE TABLE `xxl_job_info`
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4;
 
-CREATE TABLE `xxl_job_logglue`
+CREATE TABLE `schedule_job_logglue`
 (
     `id`          int(11)      NOT NULL AUTO_INCREMENT,
     `job_id`      int(11)      NOT NULL COMMENT '任务，主键ID',
@@ -80,7 +80,7 @@ CREATE TABLE `xxl_job_logglue`
 
 ## —————————————————————— job log and report ——————————————————
 
-CREATE TABLE `xxl_job_log`
+CREATE TABLE `schedule_job_log`
 (
     `id`                        bigint(20)          NOT NULL AUTO_INCREMENT,
     `job_group`                 int(11)             NOT NULL COMMENT '执行器主键ID',
@@ -105,7 +105,7 @@ CREATE TABLE `xxl_job_log`
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4;
 
-CREATE TABLE `xxl_job_log_report`
+CREATE TABLE `schedule_job_log_report`
 (
     `id`            int(11) NOT NULL AUTO_INCREMENT,
     `trigger_day`   datetime         DEFAULT NULL COMMENT '调度-时间',
@@ -120,7 +120,7 @@ CREATE TABLE `xxl_job_log_report`
 
 ## —————————————————————— lock ——————————————————
 
-CREATE TABLE `xxl_job_lock`
+CREATE TABLE `schedule_job_lock`
 (
     `lock_name` varchar(50) NOT NULL COMMENT '锁名称',
     PRIMARY KEY (`lock_name`)
@@ -129,7 +129,7 @@ CREATE TABLE `xxl_job_lock`
 
 ## —————————————————————— user ——————————————————
 
-CREATE TABLE `xxl_job_user`
+CREATE TABLE `schedule_job_user`
 (
     `id`         int(11)     NOT NULL AUTO_INCREMENT,
     `username`   varchar(50) NOT NULL COMMENT '账号',
@@ -145,11 +145,11 @@ CREATE TABLE `xxl_job_user`
 
 ## —————————————————————— for default data ——————————————————
 
-INSERT INTO `xxl_job_group`(`id`, `app_name`, `title`, `address_type`, `address_list`, `update_time`)
-    VALUES (1, 'xxl-job-executor-sample', '通用执行器Sample', 0, NULL, now()),
-           (2, 'xxl-job-executor-sample-ai', 'AI执行器Sample', 0, NULL, now());
+INSERT INTO `schedule_job_group`(`id`, `app_name`, `title`, `address_type`, `address_list`, `update_time`)
+    VALUES (1, 'schedule-executor-sample', '通用执行器Sample', 0, NULL, now()),
+           (2, 'schedule-executor-sample-ai', 'AI执行器Sample', 0, NULL, now());
 
-INSERT INTO `xxl_job_info`(`id`, `job_group`, `job_desc`, `add_time`, `update_time`, `author`, `alarm_email`,
+INSERT INTO `schedule_job_info`(`id`, `job_group`, `job_desc`, `add_time`, `update_time`, `author`, `alarm_email`,
                            `schedule_type`, `schedule_conf`, `misfire_strategy`, `executor_route_strategy`,
                            `executor_handler`, `executor_param`, `executor_block_strategy`, `executor_timeout`,
                            `executor_fail_retry_count`, `glue_type`, `glue_source`, `glue_remark`, `glue_updatetime`,
@@ -169,7 +169,7 @@ VALUES (1, 1, '示例任务01', now(), now(), 'XXL', '', 'CRON', '0 0 0 * * ? *'
     "inputs":{
         "input":"查询班级各学科前三名"
     },
-    "user": "xxl-job",
+    "user": "schedule",
     "baseUrl": "http://localhost/v1",
     "apiKey": "app-OUVgNUOQRIMokfmuJvBJoUTN"
 }', 'SERIAL_EXECUTION', 0, 0, 'BEAN', '', 'GLUE代码初始化',
@@ -181,10 +181,10 @@ VALUES (1, 1, '示例任务01', now(), now(), 'XXL', '', 'CRON', '0 0 0 * * ? *'
 }', 'SERIAL_EXECUTION', 0, 0, 'BEAN', '', 'GLUE代码初始化',
         now(), '');
 
-INSERT INTO `xxl_job_user`(`id`, `username`, `password`, `role`, `permission`)
+INSERT INTO `schedule_job_user`(`id`, `username`, `password`, `role`, `permission`)
 VALUES (1, 'admin', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', 1, NULL);
 
-INSERT INTO `xxl_job_lock` (`lock_name`)
+INSERT INTO `schedule_job_lock` (`lock_name`)
 VALUES ('schedule_lock');
 
 commit;

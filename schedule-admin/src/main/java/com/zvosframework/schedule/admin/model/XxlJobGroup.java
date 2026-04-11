@@ -11,7 +11,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-@TableName("xxl_job_group")
+@TableName("schedule_job_group")
 public class XxlJobGroup {
 
     @TableId(type = IdType.AUTO)

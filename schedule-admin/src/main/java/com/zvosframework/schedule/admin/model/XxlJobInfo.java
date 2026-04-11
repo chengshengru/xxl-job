@@ -7,7 +7,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 
 import java.util.Date;
 
-@TableName("xxl_job_info")
+@TableName("schedule_job_info")
 public class XxlJobInfo {
 	
 	@TableId(type = IdType.AUTO)

@@ -4,7 +4,7 @@
 <mapper namespace="com.zvosframework.schedule.admin.mapper.XxlJobLockMapper">
 
 	<select id="scheduleLock" resultType="java.lang.String" >
-		SELECT * FROM xxl_job_lock
+		SELECT * FROM schedule_job_lock
 		WHERE lock_name = 'schedule_lock'
 		FOR UPDATE
 	</select>
