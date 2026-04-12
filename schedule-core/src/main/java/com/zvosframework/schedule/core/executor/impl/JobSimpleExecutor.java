@@ -61,7 +61,7 @@ public class JobSimpleExecutor extends JobExecutor {
                 continue;
             }
             for (Method executeMethod : methods) {
-                Job xxlJob = executeMethod.getAnnotation(Job.class);
+                Schedule xxlJob = executeMethod.getAnnotation(Schedule.class);
                 // registry
                 registryJobHandler(xxlJob, bean, executeMethod);
             }

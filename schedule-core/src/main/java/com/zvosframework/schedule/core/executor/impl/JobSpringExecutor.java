@@ -184,13 +184,13 @@ public class JobSpringExecutor extends JobExecutor implements ApplicationContext
                 continue;
             }
             // filter method
-            Map<Method, Job> annotatedMethods = null;
+            Map<Method, Schedule> annotatedMethods = null;
             try {
                 annotatedMethods = MethodIntrospector.selectMethods(beanClass,
-                        new MethodIntrospector.MetadataLookup<Job>() {
+                        new MethodIntrospector.MetadataLookup<Schedule>() {
                             @Override
-                            public Job inspect(Method method) {
-                                return AnnotatedElementUtils.findMergedAnnotation(method, Job.class);
+                            public Schedule inspect(Method method) {
+                                return AnnotatedElementUtils.findMergedAnnotation(method, Schedule.class);
                             }
                         });
             } catch (Throwable ex) {
@@ -202,9 +202,9 @@ public class JobSpringExecutor extends JobExecutor implements ApplicationContext
 
             // 2.3、scan + registry Jobhandler
             Object jobBean = applicationContext.getBean(beanName);
-            for (Map.Entry<Method, Job> jobMethodEntry : annotatedMethods.entrySet()) {
+            for (Map.Entry<Method, Schedule> jobMethodEntry : annotatedMethods.entrySet()) {
                 Method jobMethod = jobMethodEntry.getKey();
-                Job xxlJob = jobMethodEntry.getValue();
+                Schedule xxlJob = jobMethodEntry.getValue();
                 // regist
                 registryJobHandler(xxlJob, jobBean, jobMethod);
             }
